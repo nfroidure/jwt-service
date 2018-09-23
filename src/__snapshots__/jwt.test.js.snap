@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`jwt service should fail after the validity duration 1`] = `
+Object {
+  "logs": Array [
+    Array [
+      "info",
+      "JWT service initialized!",
+    ],
+  ],
+  "times": Array [
+    Array [],
+  ],
+}
+`;
+
+exports[`jwt service should sign data 1`] = `
+Object {
+  "logs": Array [
+    Array [
+      "info",
+      "JWT service initialized!",
+    ],
+  ],
+  "times": Array [
+    Array [],
+  ],
+  "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
+}
+`;
+
+exports[`jwt service should verify data 1`] = `
+Object {
+  "decoded": Object {
+    "exp": 1390867200,
+    "iat": 1390694400,
+    "nbf": 1390694400,
+    "organisationId": 3,
+    "userId": 2,
+  },
+  "logs": Array [
+    Array [
+      "info",
+      "JWT service initialized!",
+    ],
+  ],
+  "times": Array [
+    Array [],
+  ],
+}
+`;
