@@ -1,6 +1,6 @@
 {
   "name": "jwt-service",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A simple wrapper for a simpler JWT surface API",
   "main": "dist/jwt.js",
   "metapak": {
