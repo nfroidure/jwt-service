@@ -1,5 +1,55 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`jwt service initializer should fail with a bad tolerance 1`] = `
+Object {
+  "errorCode": "E_BAD_JWT_TOLERANCE",
+  "errorParams": Array [
+    "",
+    "val is not a non-empty string or a valid number. val=\\"\\"",
+  ],
+  "logs": Array [],
+  "times": Array [],
+}
+`;
+
+exports[`jwt service initializer should fail with a uninterpreted duration 1`] = `
+Object {
+  "errorCode": "E_BAD_JWT_DURATION",
+  "errorParams": Array [
+    "q",
+  ],
+  "logs": Array [],
+  "times": Array [],
+}
+`;
+
+exports[`jwt service initializer should fail without algortithns 1`] = `
+Object {
+  "errorCode": "E_NO_JWT_ALGORITHMS",
+  "errorParams": Array [],
+  "logs": Array [],
+  "times": Array [],
+}
+`;
+
+exports[`jwt service initializer should fail without duration 1`] = `
+Object {
+  "errorCode": "E_BAD_JWT_DURATION",
+  "errorParams": Array [],
+  "logs": Array [],
+  "times": Array [],
+}
+`;
+
+exports[`jwt service initializer should fail without secret 1`] = `
+Object {
+  "errorCode": "E_NO_JWT_SECRET",
+  "errorParams": Array [],
+  "logs": Array [],
+  "times": Array [],
+}
+`;
+
 exports[`jwt service sign should fail with a bad algorithm 1`] = `
 Object {
   "errorCode": "E_UNKNOWN_ALGORYTHM",

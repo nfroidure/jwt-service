@@ -1,3 +1,4 @@
+import YError from 'yerror';
 import initJWTService from './jwt';
 
 describe('jwt service', () => {
@@ -9,13 +10,152 @@ describe('jwt service', () => {
     time.mockReset();
   });
 
+  describe('initializer', () => {
+    test('should fail without secret', async () => {
+      try {
+        await initJWTService({
+          ENV: {},
+          JWT: {
+            duration: '2d',
+            tolerance: '2h',
+            algorithms: ['HS256'],
+          },
+          log,
+          time,
+        });
+        throw new YError('E_UNEXPECTED_SUCCESS');
+      } catch (err) {
+        expect({
+          errorCode: err.code,
+          errorParams: err.params,
+          logs: log.mock.calls,
+          times: time.mock.calls,
+        }).toMatchSnapshot();
+      }
+    });
+
+    test('should fail without algortithns', async () => {
+      try {
+        await initJWTService({
+          ENV: {
+            JWT_SECRET: 'test',
+          },
+          JWT: {
+            duration: '2d',
+            tolerance: '2h',
+            algorithms: [],
+          },
+          log,
+          time,
+        });
+        throw new YError('E_UNEXPECTED_SUCCESS');
+      } catch (err) {
+        expect({
+          errorCode: err.code,
+          errorParams: err.params,
+          logs: log.mock.calls,
+          times: time.mock.calls,
+        }).toMatchSnapshot();
+      }
+    });
+
+    test('should fail without duration', async () => {
+      try {
+        await initJWTService({
+          ENV: {
+            JWT_SECRET: 'test',
+          },
+          JWT: {
+            tolerance: '2h',
+            algorithms: ['HS256'],
+          },
+          log,
+          time,
+        });
+        throw new YError('E_UNEXPECTED_SUCCESS');
+      } catch (err) {
+        expect({
+          errorCode: err.code,
+          errorParams: err.params,
+          logs: log.mock.calls,
+          times: time.mock.calls,
+        }).toMatchSnapshot();
+      }
+    });
+
+    test('should fail with a bad tolerance', async () => {
+      try {
+        await initJWTService({
+          ENV: {
+            JWT_SECRET: 'test',
+          },
+          JWT: {
+            duration: '2h',
+            tolerance: '',
+            algorithms: ['HS256'],
+          },
+          log,
+          time,
+        });
+        throw new YError('E_UNEXPECTED_SUCCESS');
+      } catch (err) {
+        expect({
+          errorCode: err.code,
+          errorParams: err.params,
+          logs: log.mock.calls,
+          times: time.mock.calls,
+        }).toMatchSnapshot();
+      }
+    });
+
+    test('should fail with a uninterpreted duration', async () => {
+      try {
+        await initJWTService({
+          ENV: {
+            JWT_SECRET: 'test',
+          },
+          JWT: {
+            duration: 'q',
+            algorithms: ['HS256'],
+          },
+          log,
+          time,
+        });
+        throw new YError('E_UNEXPECTED_SUCCESS');
+      } catch (err) {
+        expect({
+          errorCode: err.code,
+          errorParams: err.params,
+          logs: log.mock.calls,
+          times: time.mock.calls,
+        }).toMatchSnapshot();
+      }
+    });
+
+    test('should fallback to default tolerance', async () => {
+      await initJWTService({
+        ENV: {
+          JWT_SECRET: 'test',
+        },
+        JWT: {
+          duration: '2h',
+          algorithms: ['HS256'],
+        },
+        log,
+        time,
+      });
+    });
+  });
+
   describe('sign', () => {
     test('should work', async () => {
       time.mockReturnValueOnce(new Date('2014-01-26T00:00:00Z').getTime());
 
       const jwt = await initJWTService({
+        ENV: {
+          JWT_SECRET: 'secret',
+        },
         JWT: {
-          secret: 'secret',
           duration: '2d',
           tolerance: '2h',
           algorithms: ['HS256'],
@@ -57,7 +197,7 @@ describe('jwt service', () => {
           },
           'LOLALG',
         );
-        throw new Error('E_UNEXPECTED_SUCCESS');
+        throw new YError('E_UNEXPECTED_SUCCESS');
       } catch (err) {
         expect({
           errorCode: err.code,
@@ -118,7 +258,7 @@ describe('jwt service', () => {
             'XQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.' +
             'DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0',
         );
-        throw new Error('E_UNEXPECTED_SUCCESS');
+        throw new YError('E_UNEXPECTED_SUCCESS');
       } catch (err) {
         expect({
           errorCode: err.code,
@@ -145,7 +285,7 @@ describe('jwt service', () => {
 
       try {
         await jwt.verify('kikooolol');
-        throw new Error('E_UNEXPECTED_SUCCESS');
+        throw new YError('E_UNEXPECTED_SUCCESS');
       } catch (err) {
         expect({
           errorCode: err.code,

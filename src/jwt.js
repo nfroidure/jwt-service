@@ -21,7 +21,7 @@ export default initializer(
   {
     name: 'jwt',
     type: 'service',
-    inject: ['JWT', '?log', '?time'],
+    inject: ['?ENV', 'JWT', '?log', '?time'],
   },
   initJWT,
 );
@@ -54,9 +54,23 @@ export default initializer(
  *
  * const token = await jwt.sign({ my: 'payload' });
  */
-async function initJWT({ JWT, time = Date.now.bind(Date), log = noop }) {
-  const JWT_DURATION = ms(JWT.duration);
-  const JWT_TOLERANCE = ms(JWT.tolerance);
+async function initJWT({
+  ENV = {},
+  JWT,
+  time = Date.now.bind(Date),
+  log = noop,
+}) {
+  const JWT_DURATION = readMS(JWT.duration, 'E_BAD_JWT_DURATION');
+  const JWT_TOLERANCE = readMS(JWT.tolerance, 'E_BAD_JWT_TOLERANCE', 0);
+  const jwtSecret = ENV.JWT_SECRET || JWT.secret;
+
+  if (!jwtSecret) {
+    throw new YError('E_NO_JWT_SECRET');
+  }
+  if (!(JWT.algorithms && JWT.algorithms.length)) {
+    throw new YError('E_NO_JWT_ALGORITHMS');
+  }
+
   const jwtService = {
     sign,
     verify,
@@ -89,7 +103,7 @@ async function initJWT({ JWT, time = Date.now.bind(Date), log = noop }) {
             nbf: Math.floor(validAt / 1000),
           }),
         ),
-        JWT.secret,
+        jwtSecret,
         {
           algorithm,
         },
@@ -116,7 +130,7 @@ async function initJWT({ JWT, time = Date.now.bind(Date), log = noop }) {
     return new Promise((resolve, reject) => {
       jwt.verify(
         token,
-        JWT.secret,
+        jwtSecret,
         {
           algorithms: JWT.algorithms,
           clockTolerance: Math.floor(JWT_TOLERANCE / 1000),
@@ -147,3 +161,25 @@ async function initJWT({ JWT, time = Date.now.bind(Date), log = noop }) {
 }
 
 function noop() {}
+
+function readMS(value, errorCode, defaultValue) {
+  const isRequired = 'undefined' === typeof defaultValue;
+  const hasValue = 'undefined' !== typeof value;
+  const finalValue = hasValue ? value : defaultValue;
+
+  if (isRequired && !hasValue) {
+    throw new YError(errorCode, value);
+  }
+
+  try {
+    const computedDuration = ms(finalValue);
+
+    if ('undefined' === typeof computedDuration) {
+      throw new YError(errorCode, value);
+    }
+
+    return computedDuration;
+  } catch (err) {
+    throw YError.wrap(err, errorCode, finalValue);
+  }
+}
