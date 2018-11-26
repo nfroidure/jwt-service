@@ -7,14 +7,14 @@
 # jwt-service
 > A simple wrapper for a simpler JWT surface API
 
-[![NPM version](https://badge.fury.io/js/jwt-service.svg)](https://npmjs.org/package/jwt-service)
 [![Build status](https://secure.travis-ci.org/nfroidure/jwt-service.svg)](https://travis-ci.org/nfroidure/jwt-service)
+[![Coverage Status](https://coveralls.io/repos/nfroidure/jwt-service/badge.svg?branch=master)](https://coveralls.io/r/nfroidure/jwt-service?branch=master)
+[![NPM version](https://badge.fury.io/js/jwt-service.svg)](https://npmjs.org/package/jwt-service)
 [![Dependency Status](https://david-dm.org/nfroidure/jwt-service.svg)](https://david-dm.org/nfroidure/jwt-service)
 [![devDependency Status](https://david-dm.org/nfroidure/jwt-service/dev-status.svg)](https://david-dm.org/nfroidure/jwt-service#info=devDependencies)
-[![Coverage Status](https://coveralls.io/repos/nfroidure/jwt-service/badge.svg?branch=master)](https://coveralls.io/r/nfroidure/jwt-service?branch=master)
-[![Code Climate](https://codeclimate.com/github/nfroidure/jwt-service.svg)](https://codeclimate.com/github/nfroidure/jwt-service)
 [![Dependency Status](https://dependencyci.com/github/nfroidure/jwt-service/badge)](https://dependencyci.com/github/nfroidure/jwt-service)
 [![Package Quality](http://npm.packagequality.com/shield/jwt-service.svg)](http://packagequality.com/#?package=jwt-service)
+[![Code Climate](https://codeclimate.com/github/nfroidure/jwt-service.svg)](https://codeclimate.com/github/nfroidure/jwt-service)
 
 
 [//]: # (::contents:start)
