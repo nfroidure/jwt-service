@@ -49,7 +49,7 @@ const jwt = await initJWTService({
     duration: '2d',
     tolerance: '2h',
     algorithms: ['HS256'],
-  }
+  },
   log: console.log.bind(console),
   time: Date.now.bind(Date),
 });
@@ -96,7 +96,7 @@ const payload = await jwt.decode('my.jwt.token');
 ```
 
 # Authors
-- [Nicolas Froidure](http://insertafter.com/en/index.html)
+- [Nicolas Froidure](https://insertafter.com/en/index.html)
 
 # License
 [MIT](https://github.com/nfroidure/jwt-service/blob/master/LICENSE)

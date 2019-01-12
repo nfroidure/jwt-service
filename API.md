@@ -24,7 +24,7 @@ const jwt = await initJWTService({
     duration: '2d',
     tolerance: '2h',
     algorithms: ['HS256'],
-  }
+  },
   log: console.log.bind(console),
   time: Date.now.bind(Date),
 });

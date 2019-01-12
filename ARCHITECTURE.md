@@ -10,7 +10,7 @@
 ## JWT service
 
 This JWT service is a simple wrapper around the `jsonwebtoken` NPM
- module. It add a level of abstraction simply providing way to
+ module. It add a level of abstraction simply providing a way to
  sign and verify JSON Web Tokens in my apps.
 
 It also cast error to `YError` ones and adds a tolerance for expired
@@ -21,5 +21,5 @@ It also uses `Knifecycle` for a drop in dependency injection
 Finally, it deal with promises which are more convenient than the
  original API.
 
-[See in context](./src/jwt.js#L6-L19)
+[See in context](./src/jwt.js#L8-L21)
 

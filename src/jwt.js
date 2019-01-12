@@ -1,12 +1,14 @@
-import { initializer } from 'knifecycle';
+import { autoInject, service, name } from 'knifecycle';
 import YError from 'yerror';
 import ms from 'ms';
 import jwt from 'jsonwebtoken';
 
+const DEFAULT_ENV = {};
+
 /* Architecture Note #1: JWT service
 
 This JWT service is a simple wrapper around the `jsonwebtoken` NPM
- module. It add a level of abstraction simply providing way to
+ module. It add a level of abstraction simply providing a way to
  sign and verify JSON Web Tokens in my apps.
 
 It also cast error to `YError` ones and adds a tolerance for expired
@@ -17,14 +19,7 @@ It also uses `Knifecycle` for a drop in dependency injection
 Finally, it deal with promises which are more convenient than the
  original API.
 */
-export default initializer(
-  {
-    name: 'jwt',
-    type: 'service',
-    inject: ['?ENV', 'JWT', '?log', '?time'],
-  },
-  initJWT,
-);
+export default name('jwt', service(autoInject(initJWT)));
 
 /**
  * Instantiate the JWT service
@@ -47,7 +42,7 @@ export default initializer(
  *     duration: '2d',
  *     tolerance: '2h',
  *     algorithms: ['HS256'],
- *   }
+ *   },
  *   log: console.log.bind(console),
  *   time: Date.now.bind(Date),
  * });
@@ -55,7 +50,7 @@ export default initializer(
  * const token = await jwt.sign({ my: 'payload' });
  */
 async function initJWT({
-  ENV = {},
+  ENV = DEFAULT_ENV,
   JWT,
   time = Date.now.bind(Date),
   log = noop,
