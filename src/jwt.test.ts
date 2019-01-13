@@ -1,3 +1,4 @@
+// @ts-ignore: no type atm  ¯\_(ツ)_/¯
 import YError from 'yerror';
 import initJWTService from './jwt';
 
@@ -14,7 +15,6 @@ describe('jwt service', () => {
     test('should fail without secret', async () => {
       try {
         await initJWTService({
-          ENV: {},
           JWT: {
             duration: '2d',
             tolerance: '2h',
@@ -65,6 +65,7 @@ describe('jwt service', () => {
           ENV: {
             JWT_SECRET: 'test',
           },
+          // @ts-ignore: no type atm ¯\_(ツ)_/¯
           JWT: {
             tolerance: '2h',
             algorithms: ['HS256'],
