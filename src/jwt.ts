@@ -1,5 +1,4 @@
 import { autoInject, service, name } from 'knifecycle';
-// @ts-ignore: no type atm  ¯\_(ツ)_/¯
 import YError from 'yerror';
 import ms from 'ms';
 import jwt from 'jsonwebtoken';
