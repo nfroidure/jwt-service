@@ -1,11 +1,26 @@
 # API
-<a name="initJWT"></a>
+## Functions
 
-## initJWT(services) ⇒ <code>Promise.&lt;Object&gt;</code>
+<dl>
+<dt><a href="#initJWTService">initJWTService(services)</a> ⇒ <code><a href="#JWTService">Promise.&lt;JWTService&gt;</a></code></dt>
+<dd><p>Instantiate the JWT service</p>
+</dd>
+</dl>
+
+## Typedefs
+
+<dl>
+<dt><a href="#JWTService">JWTService</a></dt>
+<dd></dd>
+</dl>
+
+<a name="initJWTService"></a>
+
+## initJWTService(services) ⇒ [<code>Promise.&lt;JWTService&gt;</code>](#JWTService)
 Instantiate the JWT service
 
 **Kind**: global function  
-**Returns**: <code>Promise.&lt;Object&gt;</code> - A promise of the jwt service  
+**Returns**: [<code>Promise.&lt;JWTService&gt;</code>](#JWTService) - A promise of the jwt service  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -31,17 +46,21 @@ const jwt = await initJWTService({
 
 const token = await jwt.sign({ my: 'payload' });
 ```
+<a name="JWTService"></a>
 
-* [initJWT(services)](#initJWT) ⇒ <code>Promise.&lt;Object&gt;</code>
-    * [~sign(payload, [algorithm])](#initJWT..sign) ⇒ <code>Promise.&lt;String&gt;</code>
-    * [~verify([token])](#initJWT..verify) ⇒ <code>Promise.&lt;Object&gt;</code>
+## JWTService
+**Kind**: global typedef  
 
-<a name="initJWT..sign"></a>
+* [JWTService](#JWTService)
+    * [.sign(payload, [algorithm])](#JWTService.sign) ⇒ <code>Promise.&lt;String&gt;</code>
+    * [.verify([token])](#JWTService.verify) ⇒ <code>Promise.&lt;Object&gt;</code>
 
-### initJWT~sign(payload, [algorithm]) ⇒ <code>Promise.&lt;String&gt;</code>
+<a name="JWTService.sign"></a>
+
+### JWTService.sign(payload, [algorithm]) ⇒ <code>Promise.&lt;String&gt;</code>
 Sign the given payload
 
-**Kind**: inner method of [<code>initJWT</code>](#initJWT)  
+**Kind**: static method of [<code>JWTService</code>](#JWTService)  
 **Returns**: <code>Promise.&lt;String&gt;</code> - A promise to be resolved with the signed token.  
 
 | Param | Type | Description |
@@ -53,12 +72,12 @@ Sign the given payload
 ```js
 const token = await jwt.sign({ my: 'payload' });
 ```
-<a name="initJWT..verify"></a>
+<a name="JWTService.verify"></a>
 
-### initJWT~verify([token]) ⇒ <code>Promise.&lt;Object&gt;</code>
+### JWTService.verify([token]) ⇒ <code>Promise.&lt;Object&gt;</code>
 Verify and decode the given token
 
-**Kind**: inner method of [<code>initJWT</code>](#initJWT)  
+**Kind**: static method of [<code>JWTService</code>](#JWTService)  
 **Returns**: <code>Promise.&lt;Object&gt;</code> - A promise to be resolved with the token payload.  
 
 | Param | Type | Description |
