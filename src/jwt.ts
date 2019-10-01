@@ -20,8 +20,18 @@ type Payload = {
   [key: string]: any;
 };
 
+/**
+@typedef JWTSignResult
+*/
+type JWTSignResult = {
+  token: string;
+  issuedAt: number;
+  expiresAt: number;
+  validAt: number;
+};
+
 interface JWTService {
-  sign: (payload: Payload, algorithm?: string) => Promise<string>;
+  sign: (payload: Payload, algorithm?: string) => Promise<JWTSignResult>;
   verify: (token: string) => Promise<Payload>;
 }
 
@@ -117,12 +127,15 @@ async function initJWT({
    * @memberof JWTService
    * @param  {Object}   payload      The payload to sign
    * @param  {String}   [algorithm]  The signing algorithm
-   * @return {Promise<String>}
+   * @return {Promise<JWTSignResult>}
    * A promise to be resolved with the signed token.
    * @example
    * const token = await jwt.sign({ my: 'payload' });
    */
-  async function sign(payload: object, algorithm: string = JWT.algorithms[0]) {
+  async function sign(
+    payload: object,
+    algorithm: string = JWT.algorithms[0],
+  ): Promise<JWTSignResult> {
     const issuedAt = time();
     const expiresAt = issuedAt + JWT_DURATION;
     const validAt = issuedAt;
@@ -131,7 +144,7 @@ async function initJWT({
       throw new YError('E_UNKNOWN_ALGORYTHM', algorithm, JWT.algorithms);
     }
 
-    return new Promise<string>((resolve, reject) => {
+    const token = await new Promise<string>((resolve, reject) => {
       jwt.sign(
         JSON.stringify({
           ...payload,
@@ -152,6 +165,13 @@ async function initJWT({
         },
       );
     });
+
+    return {
+      token,
+      issuedAt,
+      expiresAt,
+      validAt,
+    };
   }
 
   /**
@@ -161,7 +181,7 @@ async function initJWT({
    * @return {Promise<Object>}
    * A promise to be resolved with the token payload.
    * @example
-   * const payload = await jwt.decode('my.jwt.token');
+   * const payload = await jwt.verify('my.jwt.token');
    */
   async function verify(token) {
     return new Promise((resolve, reject) => {

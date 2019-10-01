@@ -23,7 +23,7 @@ Object {
 }
 `;
 
-exports[`jwt service initializer should fail without algortithns 1`] = `
+exports[`jwt service initializer should fail without algorithms 1`] = `
 Object {
   "errorCode": "E_NO_JWT_ALGORITHMS",
   "errorParams": Array [],
@@ -82,7 +82,12 @@ Object {
   "times": Array [
     Array [],
   ],
-  "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
+  "token": Object {
+    "expiresAt": 1390867200000,
+    "issuedAt": 1390694400000,
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
+    "validAt": 1390694400000,
+  },
 }
 `;
 
