@@ -34,7 +34,7 @@ describe('jwt service', () => {
       }
     });
 
-    test('should fail without algortithns', async () => {
+    test('should fail without algorithms', async () => {
       try {
         await initJWTService({
           ENV: {
