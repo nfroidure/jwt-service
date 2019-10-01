@@ -52,16 +52,16 @@ const token = await jwt.sign({ my: 'payload' });
 **Kind**: global typedef  
 
 * [JWTService](#JWTService)
-    * [.sign(payload, [algorithm])](#JWTService.sign) ⇒ <code>Promise.&lt;String&gt;</code>
+    * [.sign(payload, [algorithm])](#JWTService.sign) ⇒ <code>Promise.&lt;JWTSignResult&gt;</code>
     * [.verify([token])](#JWTService.verify) ⇒ <code>Promise.&lt;Object&gt;</code>
 
 <a name="JWTService.sign"></a>
 
-### JWTService.sign(payload, [algorithm]) ⇒ <code>Promise.&lt;String&gt;</code>
+### JWTService.sign(payload, [algorithm]) ⇒ <code>Promise.&lt;JWTSignResult&gt;</code>
 Sign the given payload
 
 **Kind**: static method of [<code>JWTService</code>](#JWTService)  
-**Returns**: <code>Promise.&lt;String&gt;</code> - A promise to be resolved with the signed token.  
+**Returns**: <code>Promise.&lt;JWTSignResult&gt;</code> - A promise to be resolved with the signed token.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -86,5 +86,5 @@ Verify and decode the given token
 
 **Example**  
 ```js
-const payload = await jwt.decode('my.jwt.token');
+const payload = await jwt.verify('my.jwt.token');
 ```
