@@ -11,14 +11,9 @@
     "esModuleInterop": true
   },
   "include": [
-    "**/*.ts"
+    "src/jwt.ts"
   ],
   "exclude": [
     "node_modules"
-  ],
-  "types": [
-    "jest",
-    "ms",
-    "jsonwebtoken"
   ]
 }

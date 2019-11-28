@@ -10,18 +10,13 @@
       "testsFiles": "'src/**/*.test.ts'",
       "distFiles": "'dist/**/*.js'",
       "typesFiles": "src/jwt.ts",
-      "typesDefs": "src/jwt.d.ts",
+      "typesDefs": "src/*.d.ts",
       "ignore": [
         "dist"
       ],
       "bundleFiles": [
         "dist/**/*.js",
         "src/jwt.d.ts"
-      ],
-      "types": [
-        "jest",
-        "ms",
-        "jsonwebtoken"
       ]
     },
     "configs": [
@@ -53,7 +48,7 @@
     "prettier": "prettier --write 'src/**/*.ts'",
     "preversion": "npm run types && npm run compile && npm t && npm run lint && npm run architecture && npm run doc && npm run metapak -- -s",
     "test": "npm run jest",
-    "types": "tsc --declaration --emitDeclarationOnly --project '.tsconfig.json' src/jwt.ts; npm run prettier -- src/jwt.d.ts",
+    "types": "rm src/*.d.ts; tsc --project . --declaration --emitDeclarationOnly; npm run prettier -- src/*.d.ts",
     "version": "npm run changelog"
   },
   "repository": {
@@ -75,38 +70,38 @@
   },
   "homepage": "https://github.com/nfroidure/jwt-service#readme",
   "dependencies": {
-    "@types/jsonwebtoken": "^8.3.2",
-    "@types/ms": "^0.7.30",
+    "@types/jsonwebtoken": "^8.3.5",
+    "@types/ms": "^0.7.31",
     "jsonwebtoken": "^8.5.1",
-    "knifecycle": "^6.0.0",
+    "knifecycle": "^7.0.0",
     "ms": "^2.1.2",
     "yerror": "^4.0.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-typescript": "^7.3.3",
-    "@babel/register": "^7.5.5",
-    "@types/jest": "^23.3.12",
-    "@typescript-eslint/parser": "^1.13.0",
-    "babel-eslint": "^10.0.2",
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-typescript": "^7.7.4",
+    "@babel/register": "^7.7.4",
+    "@types/jest": "^24.0.23",
+    "@typescript-eslint/parser": "^2.9.0",
+    "babel-eslint": "^10.0.3",
     "babel-plugin-knifecycle": "^1.0.3",
-    "commitizen": "^3.1.1",
-    "conventional-changelog-cli": "^2.0.23",
-    "coveralls": "^3.0.5",
+    "commitizen": "^4.0.3",
+    "conventional-changelog-cli": "^2.0.28",
+    "coveralls": "^3.0.9",
     "cz-conventional-changelog": "^3.0.2",
-    "eslint": "^6.1.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "jest": "^24.8.0",
+    "eslint": "^6.7.1",
+    "eslint-plugin-prettier": "^3.1.1",
+    "jest": "^24.9.0",
     "jsarch": "^2.0.3",
-    "jsdoc-to-markdown": "^5.0.0",
+    "jsdoc-to-markdown": "^5.0.3",
     "metapak": "^3.1.2",
-    "metapak-nfroidure": "9.6.4",
-    "prettier": "^1.18.2",
-    "typescript": "^3.5.3"
+    "metapak-nfroidure": "9.7.3",
+    "prettier": "^1.19.1",
+    "typescript": "^3.7.2"
   },
   "contributors": [],
   "engines": {

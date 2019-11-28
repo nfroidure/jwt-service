@@ -10,8 +10,17 @@ interface JWT_ENV {
 declare type Payload = {
   [key: string]: any;
 };
+/**
+@typedef JWTSignResult
+*/
+declare type JWTSignResult = {
+  token: string;
+  issuedAt: number;
+  expiresAt: number;
+  validAt: number;
+};
 interface JWTService {
-  sign: (payload: Payload, algorithm?: string) => Promise<string>;
+  sign: (payload: Payload, algorithm?: string) => Promise<JWTSignResult>;
   verify: (token: string) => Promise<Payload>;
 }
 interface JWTServiceDependencies {
