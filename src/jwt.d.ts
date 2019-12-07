@@ -1,35 +1,36 @@
-interface JWT_CONFIG {
+import { LogService, TimeService } from 'common-services';
+export interface JWT_CONFIG {
   secret?: string;
   duration: string;
   tolerance?: string;
   algorithms: Array<string>;
 }
-interface JWT_ENV {
+export interface JWT_ENV {
   JWT_SECRET?: string;
 }
-declare type Payload = {
+export declare type Payload = {
   [key: string]: any;
 };
 /**
 @typedef JWTSignResult
 */
-declare type JWTSignResult = {
+export declare type JWTSignResult = {
   token: string;
   issuedAt: number;
   expiresAt: number;
   validAt: number;
 };
-interface JWTService {
+export interface JWTService {
   sign: (payload: Payload, algorithm?: string) => Promise<JWTSignResult>;
   verify: (token: string) => Promise<Payload>;
 }
-interface JWTServiceDependencies {
+export interface JWTServiceDependencies {
   ENV?: JWT_ENV;
   JWT: JWT_CONFIG;
-  time?: () => number;
-  log?: (...args: Array<any>) => void;
+  time?: TimeService;
+  log?: LogService;
 }
-interface JWTServiceInitializer {
+export interface JWTServiceInitializer {
   (dependencies: JWTServiceDependencies): Promise<JWTService>;
 }
 declare const wrappedInitializer: JWTServiceInitializer;

@@ -1,48 +1,49 @@
 import { autoInject, service, name } from 'knifecycle';
+import { LogService, TimeService } from 'common-services';
 import YError from 'yerror';
 import ms from 'ms';
 import jwt from 'jsonwebtoken';
 
 const DEFAULT_ENV: JWT_ENV = {};
 
-interface JWT_CONFIG {
+export interface JWT_CONFIG {
   secret?: string;
   duration: string;
   tolerance?: string;
   algorithms: Array<string>;
 }
 
-interface JWT_ENV {
+export interface JWT_ENV {
   JWT_SECRET?: string;
 }
 
-type Payload = {
+export type Payload = {
   [key: string]: any;
 };
 
 /**
 @typedef JWTSignResult
 */
-type JWTSignResult = {
+export type JWTSignResult = {
   token: string;
   issuedAt: number;
   expiresAt: number;
   validAt: number;
 };
 
-interface JWTService {
+export interface JWTService {
   sign: (payload: Payload, algorithm?: string) => Promise<JWTSignResult>;
   verify: (token: string) => Promise<Payload>;
 }
 
-interface JWTServiceDependencies {
+export interface JWTServiceDependencies {
   ENV?: JWT_ENV;
   JWT: JWT_CONFIG;
-  time?: () => number;
-  log?: (...args: Array<any>) => void;
+  time?: TimeService;
+  log?: LogService;
 }
 
-interface JWTServiceInitializer {
+export interface JWTServiceInitializer {
   (dependencies: JWTServiceDependencies): Promise<JWTService>;
 }
 
