@@ -2,7 +2,7 @@ import { autoInject, service, name } from 'knifecycle';
 import { LogService, TimeService } from 'common-services';
 import YError from 'yerror';
 import ms from 'ms';
-import jwt from 'jsonwebtoken';
+import jwt, { SignOptions, Algorithm } from 'jsonwebtoken';
 
 const DEFAULT_ENV: JWT_ENV = {};
 
@@ -156,7 +156,7 @@ async function initJWT({
         jwtSecret,
         {
           algorithm,
-        },
+        } as SignOptions,
         (err, token: string) => {
           if (err) {
             reject(YError.wrap(err, 'E_JWT', payload));
@@ -190,7 +190,7 @@ async function initJWT({
         token,
         jwtSecret,
         {
-          algorithms: JWT.algorithms,
+          algorithms: (JWT.algorithms as unknown) as Algorithm[],
           clockTolerance: Math.floor(JWT_TOLERANCE / 1000),
           clockTimestamp: Math.floor(time() / 1000),
         },

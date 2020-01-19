@@ -3,20 +3,20 @@
   "version": "4.1.0",
   "description": "A simple wrapper for a simpler JWT surface API",
   "main": "dist/jwt.js",
-  "types": "src/jwt.d.ts",
+  "types": "dist/jwt.d.ts",
   "metapak": {
     "data": {
       "files": "'src/**/*.ts'",
       "testsFiles": "'src/**/*.test.ts'",
       "distFiles": "'dist/**/*.js'",
-      "typesFiles": "src/*.ts",
-      "typesDefs": "src/jwt.d.ts",
       "ignore": [
         "dist"
       ],
       "bundleFiles": [
         "dist/**/*.js",
-        "src/jwt.d.ts"
+        "dist/jwt.d.ts",
+        "dist",
+        "src"
       ]
     },
     "configs": [
@@ -36,7 +36,7 @@
     "architecture": "jsarch 'src/**/*.ts' > ARCHITECTURE.md && git add ARCHITECTURE.md",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "cli": "env NODE_ENV=${NODE_ENV:-cli}",
-    "compile": "babel --extensions '.ts,.js' src --out-dir=dist",
+    "compile": "babel --extensions '.ts,.js' src --out-dir=dist --source-maps=true",
     "cover": "npm run jest -- --coverage",
     "coveralls": "npm run cover && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "cz": "env NODE_ENV=${NODE_ENV:-cli} git cz",
@@ -44,11 +44,11 @@
     "jest": "NODE_ENV=test jest",
     "lint": "eslint 'src/**/*.ts'",
     "metapak": "metapak",
-    "precz": "npm run types && npm t && npm run lint && npm run architecture && npm run doc && npm run metapak -- -s",
+    "precz": "npm run types && npm run compile && npm t && npm run lint && npm run architecture && npm run doc && npm run metapak -- -s",
     "prettier": "prettier --write 'src/**/*.ts'",
     "preversion": "npm run types && npm run compile && npm t && npm run lint && npm run architecture && npm run doc && npm run metapak -- -s",
     "test": "npm run jest",
-    "types": "rm src/jwt.d.ts; tsc --project . --declaration --emitDeclarationOnly; npm run prettier -- src/jwt.d.ts",
+    "types": "rimraf -f 'dist/**/*.d.ts' && tsc --project . --declaration --emitDeclarationOnly --outDir dist",
     "version": "npm run changelog"
   },
   "repository": {
@@ -70,39 +70,40 @@
   },
   "homepage": "https://github.com/nfroidure/jwt-service#readme",
   "dependencies": {
-    "@types/jsonwebtoken": "^8.3.5",
+    "@types/jsonwebtoken": "^8.3.6",
     "@types/ms": "^0.7.31",
-    "common-services": "^6.0.1",
+    "common-services": "^6.2.0",
     "jsonwebtoken": "^8.5.1",
-    "knifecycle": "^8.0.0",
+    "knifecycle": "^8.1.0",
     "ms": "^2.1.2",
-    "yerror": "^4.0.1"
+    "yerror": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.4",
-    "@babel/core": "^7.7.4",
-    "@babel/plugin-proposal-class-properties": "^7.7.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.7.4",
-    "@babel/preset-env": "^7.7.4",
-    "@babel/preset-typescript": "^7.7.4",
-    "@babel/register": "^7.7.4",
-    "@types/jest": "^24.0.23",
-    "@typescript-eslint/parser": "^2.9.0",
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
+    "@babel/register": "^7.8.3",
+    "@types/jest": "^24.9.0",
+    "@typescript-eslint/eslint-plugin": "^2.16.0",
+    "@typescript-eslint/parser": "^2.16.0",
     "babel-eslint": "^10.0.3",
     "babel-plugin-knifecycle": "^1.0.3",
     "commitizen": "^4.0.3",
-    "conventional-changelog-cli": "^2.0.28",
+    "conventional-changelog-cli": "^2.0.31",
     "coveralls": "^3.0.9",
     "cz-conventional-changelog": "^3.0.2",
-    "eslint": "^6.7.1",
-    "eslint-plugin-prettier": "^3.1.1",
+    "eslint": "^6.8.0",
+    "eslint-plugin-prettier": "^3.1.2",
     "jest": "^24.9.0",
     "jsarch": "^2.0.3",
     "jsdoc-to-markdown": "^5.0.3",
-    "metapak": "^3.1.2",
-    "metapak-nfroidure": "9.7.4",
+    "metapak": "^3.1.6",
+    "metapak-nfroidure": "9.8.1",
     "prettier": "^1.19.1",
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.5"
   },
   "contributors": [],
   "engines": {
@@ -169,7 +170,9 @@
   },
   "files": [
     "dist/**/*.js",
-    "src/jwt.d.ts",
+    "dist/jwt.d.ts",
+    "dist",
+    "src",
     "LICENSE",
     "README.md",
     "CHANGELOG.md"
