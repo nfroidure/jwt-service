@@ -31,20 +31,23 @@ export type JWTSignResult = {
   validAt: number;
 };
 
-export interface JWTService {
-  sign: (payload: Payload, algorithm?: string) => Promise<JWTSignResult>;
-  verify: (token: string) => Promise<Payload>;
+export interface JWTService<PAYLOAD extends {} = Payload> {
+  sign: (payload: PAYLOAD, algorithm?: string) => Promise<JWTSignResult>;
+  verify: (token: string) => Promise<PAYLOAD>;
 }
 
-export interface JWTServiceDependencies {
+export type JWTServiceConfig = {
   ENV?: JWT_ENV;
   JWT: JWT_CONFIG;
+};
+
+export type JWTServiceDependencies = JWTServiceConfig & {
   time?: TimeService;
   log?: LogService;
-}
+};
 
-export interface JWTServiceInitializer {
-  (dependencies: JWTServiceDependencies): Promise<JWTService>;
+export interface JWTServiceInitializer<PAYLOAD extends {} = Payload> {
+  (dependencies: JWTServiceDependencies): Promise<JWTService<PAYLOAD>>;
 }
 
 /* Architecture Note #1: JWT service
