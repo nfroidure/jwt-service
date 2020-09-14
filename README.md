@@ -8,12 +8,12 @@
 > A simple wrapper for a simpler JWT surface API
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/nfroidure/jwt-service/blob/master/LICENSE)
-[![Build status](https://secure.travis-ci.org/nfroidure/jwt-service.svg)](https://travis-ci.org/nfroidure/jwt-service)
-[![Coverage Status](https://coveralls.io/repos/nfroidure/jwt-service/badge.svg?branch=master)](https://coveralls.io/r/nfroidure/jwt-service?branch=master)
+[![Build status](https://travis-ci.com/nfroidure/jwt-service.svg?branch=master)](https://travis-ci.com/github/nfroidure/jwt-service)
+[![Coverage Status](https://coveralls.io/repos/github/nfroidure/jwt-service/badge.svg?branch=master)](https://coveralls.io/github/nfroidure/jwt-service?branch=master)
 [![NPM version](https://badge.fury.io/js/jwt-service.svg)](https://npmjs.org/package/jwt-service)
 [![Dependency Status](https://david-dm.org/nfroidure/jwt-service.svg)](https://david-dm.org/nfroidure/jwt-service)
 [![devDependency Status](https://david-dm.org/nfroidure/jwt-service/dev-status.svg)](https://david-dm.org/nfroidure/jwt-service#info=devDependencies)
-[![Package Quality](http://npm.packagequality.com/shield/jwt-service.svg)](http://packagequality.com/#?package=jwt-service)
+[![Package Quality](https://npm.packagequality.com/shield/jwt-service.svg)](https://packagequality.com/#?package=jwt-service)
 [![Code Climate](https://codeclimate.com/github/nfroidure/jwt-service.svg)](https://codeclimate.com/github/nfroidure/jwt-service)
 
 

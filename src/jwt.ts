@@ -1,8 +1,9 @@
-import { autoInject, service, name } from 'knifecycle';
-import { LogService, TimeService } from 'common-services';
+import { autoService, name } from 'knifecycle';
 import YError from 'yerror';
 import ms from 'ms';
-import jwt, { SignOptions, Algorithm } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
+import type { SignOptions, Algorithm } from 'jsonwebtoken';
+import type { LogService, TimeService } from 'common-services';
 
 const DEFAULT_ENV: JWT_ENV = {};
 
@@ -66,7 +67,7 @@ Finally, it deal with promises which are more convenient than the
 */
 const wrappedInitializer: JWTServiceInitializer = name(
   'jwt',
-  service(autoInject(initJWT)),
+  autoService(initJWT) as JWTServiceInitializer,
 );
 
 export default wrappedInitializer;
@@ -101,12 +102,12 @@ export default wrappedInitializer;
  *
  * const token = await jwt.sign({ my: 'payload' });
  */
-async function initJWT({
+async function initJWT<PAYLOAD extends {} = Payload>({
   ENV = DEFAULT_ENV,
   JWT,
   time = Date.now.bind(Date),
   log = noop,
-}: JWTServiceDependencies): Promise<JWTService> {
+}: JWTServiceDependencies): Promise<JWTService<PAYLOAD>> {
   const JWT_DURATION = readMS(JWT.duration, 'E_BAD_JWT_DURATION');
   const JWT_TOLERANCE = readMS(JWT.tolerance, 'E_BAD_JWT_TOLERANCE', 0);
   const jwtSecret = ENV.JWT_SECRET || JWT.secret;
@@ -121,7 +122,7 @@ async function initJWT({
   /**
   @typedef JWTService
 */
-  const jwtService: JWTService = {
+  const jwtService: JWTService<PAYLOAD> = {
     sign,
     verify,
   };
@@ -187,7 +188,7 @@ async function initJWT({
    * @example
    * const payload = await jwt.verify('my.jwt.token');
    */
-  async function verify(token) {
+  async function verify(token: string): Promise<PAYLOAD> {
     return new Promise((resolve, reject) => {
       jwt.verify(
         token,
@@ -210,7 +211,7 @@ async function initJWT({
             reject(YError.wrap(err, 'E_JWT', token));
             return;
           }
-          resolve(decoded);
+          resolve(decoded as PAYLOAD);
         },
       );
     });
