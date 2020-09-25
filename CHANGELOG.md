@@ -1,3 +1,12 @@
+## [6.0.1](https://github.com/nfroidure/jwt-service/compare/v6.0.0...v6.0.1) (2020-09-25)
+
+
+### Bug Fixes
+
+* **types:** fix types generation ([0160f2a](https://github.com/nfroidure/jwt-service/commit/0160f2ad55fddc93d8c19d5a0d8dd915068e7416))
+
+
+
 # [6.0.0](https://github.com/nfroidure/jwt-service/compare/v5.0.0...v6.0.0) (2020-09-14)
 
 
