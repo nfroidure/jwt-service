@@ -47,9 +47,9 @@
     "jest": "NODE_ENV=test jest",
     "lint": "eslint 'src/**/*.ts'",
     "metapak": "metapak",
-    "precz": "npm run types && npm run compile && npm t && npm run lint && npm run architecture && npm run doc && npm run metapak -- -s",
+    "precz": "npm run compile && npm run types && npm t && npm run lint && npm run architecture && npm run doc && npm run metapak -- -s",
     "prettier": "prettier --write 'src/**/*.ts'",
-    "preversion": "npm run types && npm run compile && npm t && npm run lint && npm run architecture && npm run doc && npm run metapak -- -s",
+    "preversion": "npm run compile && npm run types && npm t && npm run lint && npm run architecture && npm run doc && npm run metapak -- -s",
     "test": "npm run jest",
     "types": "rimraf -f 'dist/**/*.d.ts' && tsc --project . --declaration --emitDeclarationOnly --outDir dist",
     "version": "npm run changelog"
