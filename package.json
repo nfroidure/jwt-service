@@ -154,24 +154,6 @@
       "<rootDir>/src"
     ]
   },
-  "babel": {
-    "presets": [
-      "@babel/typescript",
-      [
-        "@babel/env",
-        {
-          "targets": {
-            "node": "10.19.0"
-          }
-        }
-      ]
-    ],
-    "plugins": [
-      "@babel/proposal-class-properties",
-      "babel-plugin-knifecycle",
-      "@babel/plugin-proposal-object-rest-spread"
-    ]
-  },
   "files": [
     "dist/**/*.js",
     "dist/jwt.d.ts",
@@ -233,5 +215,53 @@
         "typescript"
       ]
     }
+  },
+  "babel": {
+    "plugins": [
+      "@babel/proposal-class-properties",
+      "@babel/plugin-proposal-object-rest-spread"
+    ],
+    "presets": [
+      "@babel/typescript",
+      [
+        "@babel/env",
+        {
+          "targets": {
+            "node": "10.19.0"
+          }
+        }
+      ]
+    ],
+    "env": {
+      "cjs": {
+        "presets": [
+          [
+            "@babel/env",
+            {
+              "targets": {
+                "node": "10"
+              },
+              "modules": "commonjs"
+            }
+          ]
+        ],
+        "comments": true
+      },
+      "mjs": {
+        "presets": [
+          [
+            "@babel/env",
+            {
+              "targets": {
+                "node": "12"
+              },
+              "modules": false
+            }
+          ]
+        ],
+        "comments": false
+      }
+    },
+    "sourceMaps": true
   }
 }
