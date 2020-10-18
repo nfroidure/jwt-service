@@ -1,3 +1,12 @@
+## [6.0.3](https://github.com/nfroidure/jwt-service/compare/v6.0.2...v6.0.3) (2020-10-18)
+
+
+### Bug Fixes
+
+* **build:** fix the js module build ([812a410](https://github.com/nfroidure/jwt-service/commit/812a410a26c7ea6f57571530f72b0de950af1e17))
+
+
+
 ## [6.0.2](https://github.com/nfroidure/jwt-service/compare/v6.0.1...v6.0.2) (2020-10-04)
 
 
