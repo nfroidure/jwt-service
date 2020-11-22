@@ -1,6 +1,6 @@
-// @ts-ignore: no type atm  ¯\_(ツ)_/¯
 import YError from 'yerror';
 import initJWTService from './jwt';
+import type { JWT_CONFIG } from './jwt';
 
 describe('jwt service', () => {
   const log = jest.fn();
@@ -65,11 +65,10 @@ describe('jwt service', () => {
           ENV: {
             JWT_SECRET: 'test',
           },
-          // @ts-ignore: no type atm ¯\_(ツ)_/¯
           JWT: {
             tolerance: '2h',
             algorithms: ['HS256'],
-          },
+          } as JWT_CONFIG,
           log,
           time,
         });

@@ -21,5 +21,5 @@ It also uses `Knifecycle` for a drop in dependency injection
 Finally, it deal with promises which are more convenient than the
  original API.
 
-[See in context](./src/jwt.ts#L54-L67)
+[See in context](./src/jwt.ts#L52-L65)
 

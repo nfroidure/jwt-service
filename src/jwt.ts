@@ -18,9 +18,7 @@ export interface JWT_ENV {
   JWT_SECRET?: string;
 }
 
-export type Payload = {
-  [key: string]: any;
-};
+export type Payload = Record<string, any>;
 
 /**
 @typedef JWTSignResult
@@ -32,7 +30,7 @@ export type JWTSignResult = {
   validAt: number;
 };
 
-export interface JWTService<PAYLOAD extends {} = Payload> {
+export interface JWTService<PAYLOAD extends Payload = Payload> {
   sign: (payload: PAYLOAD, algorithm?: string) => Promise<JWTSignResult>;
   verify: (token: string) => Promise<PAYLOAD>;
 }
@@ -47,7 +45,7 @@ export type JWTServiceDependencies = JWTServiceConfig & {
   log?: LogService;
 };
 
-export interface JWTServiceInitializer<PAYLOAD extends {} = Payload> {
+export interface JWTServiceInitializer<PAYLOAD extends Payload = Payload> {
   (dependencies: JWTServiceDependencies): Promise<JWTService<PAYLOAD>>;
 }
 
@@ -102,7 +100,7 @@ export default wrappedInitializer;
  *
  * const token = await jwt.sign({ my: 'payload' });
  */
-async function initJWT<PAYLOAD extends {} = Payload>({
+async function initJWT<PAYLOAD extends Payload = Payload>({
   ENV = DEFAULT_ENV,
   JWT,
   time = Date.now.bind(Date),
@@ -138,7 +136,7 @@ async function initJWT<PAYLOAD extends {} = Payload>({
    * const token = await jwt.sign({ my: 'payload' });
    */
   async function sign(
-    payload: object,
+    payload: PAYLOAD,
     algorithm: string = JWT.algorithms[0],
   ): Promise<JWTSignResult> {
     const issuedAt = time();
@@ -222,14 +220,15 @@ async function initJWT<PAYLOAD extends {} = Payload>({
   return jwtService;
 }
 
-// eslint-disable-next-line
-function noop(...args: any[]): any {}
+function noop(...args: unknown[]) {
+  args;
+}
 
 function readMS(
   value: string,
   errorCode: string,
   defaultValue: number | undefined = undefined,
-) {
+): number {
   const isRequired = 'undefined' === typeof defaultValue;
   const hasValue = 'undefined' !== typeof value;
   const finalValue = hasValue ? value : '' + defaultValue;
