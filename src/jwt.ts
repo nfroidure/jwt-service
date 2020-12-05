@@ -7,6 +7,8 @@ import type { LogService, TimeService } from 'common-services';
 
 const DEFAULT_ENV: JWT_ENV = {};
 
+export const DEFAULT_JWT_SECRET_ENV_NAME = 'JWT_SECRET';
+
 export interface JWT_CONFIG {
   secret?: string;
   duration: string;
@@ -16,6 +18,7 @@ export interface JWT_CONFIG {
 
 export interface JWT_ENV {
   JWT_SECRET?: string;
+  [name: string]: string;
 }
 
 export type Payload = Record<string, any>;
@@ -37,6 +40,7 @@ export interface JWTService<PAYLOAD extends Payload = Payload> {
 
 export type JWTServiceConfig = {
   ENV?: JWT_ENV;
+  JWT_SECRET_ENV_NAME?: string;
   JWT: JWT_CONFIG;
 };
 
@@ -76,6 +80,11 @@ export default wrappedInitializer;
  * @function
  * @param  {Object}     services
  * The services to inject
+ * @param  {Function}   [services.JWT_SECRET_ENV_NAME]
+ * The environment variable name in which to pick-up the
+ *  JWT secret
+ * @param  {Object}   [services.ENV]
+ * An environment object
  * @param  {Function}   services.JWT
  * The JWT service configuration object
  * @param  {Function}   [services.log]
@@ -101,6 +110,7 @@ export default wrappedInitializer;
  * const token = await jwt.sign({ my: 'payload' });
  */
 async function initJWT<PAYLOAD extends Payload = Payload>({
+  JWT_SECRET_ENV_NAME = DEFAULT_JWT_SECRET_ENV_NAME,
   ENV = DEFAULT_ENV,
   JWT,
   time = Date.now.bind(Date),
@@ -108,7 +118,7 @@ async function initJWT<PAYLOAD extends Payload = Payload>({
 }: JWTServiceDependencies): Promise<JWTService<PAYLOAD>> {
   const JWT_DURATION = readMS(JWT.duration, 'E_BAD_JWT_DURATION');
   const JWT_TOLERANCE = readMS(JWT.tolerance, 'E_BAD_JWT_TOLERANCE', 0);
-  const jwtSecret = ENV.JWT_SECRET || JWT.secret;
+  const jwtSecret = ENV[JWT_SECRET_ENV_NAME] || JWT.secret;
 
   if (!jwtSecret) {
     throw new YError('E_NO_JWT_SECRET');

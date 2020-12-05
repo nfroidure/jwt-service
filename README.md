@@ -19,7 +19,36 @@
 
 [//]: # (::contents:start)
 
-This wrapper is directly usable with [Knifecycle](https://github.com/nfroidure/knifecycle).
+This wrapper is directly usable with
+[Knifecycle](https://github.com/nfroidure/knifecycle).
+
+## Overriding
+
+Let's say you wanna create a sub-service of this one with custom inputs, for
+say, refresh tokens in a [Whook](https://github.com/nfroidure/whook) project,
+here is how you would do:
+
+```ts
+import initJWT, { JWTServiceConfig } from 'jwt_service';
+import { inject } from 'knifecycle';
+
+export type RefreshJWTServiceConfig = {
+  ENV: JWTServiceConfig['ENV'];
+  REFRESH_JWT_SECRET_ENV_NAME: JWTServiceConfig['JWT_SECRET_ENV_NAME'];
+  REFRESH_JWT: JWTServiceConfig['JWT'];
+};
+
+export default inject(
+  [
+    '?JWT_SECRET_ENV_NAME>REFRESH_JWT_SECRET_ENV_NAME',
+    'JWT>REFRESH_JWT',
+    '?ENV',
+    '?log',
+    '?time',
+  ],
+  initJWT,
+);
+```
 
 [//]: # (::contents:end)
 
@@ -50,6 +79,8 @@ Instantiate the JWT service
 | Param | Type | Description |
 | --- | --- | --- |
 | services | <code>Object</code> | The services to inject |
+| [services.JWT_SECRET_ENV_NAME] | <code>function</code> | The environment variable name in which to pick-up the  JWT secret |
+| [services.ENV] | <code>Object</code> | An environment object |
 | services.JWT | <code>function</code> | The JWT service configuration object |
 | [services.log] | <code>function</code> | A logging function |
 | [services.time] | <code>function</code> | A function returning the current timestamp |

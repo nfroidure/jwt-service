@@ -30,7 +30,14 @@ describe('jwt service', () => {
           errorParams: err.params,
           logs: log.mock.calls,
           times: time.mock.calls,
-        }).toMatchSnapshot();
+        }).toMatchInlineSnapshot(`
+          Object {
+            "errorCode": "E_NO_JWT_SECRET",
+            "errorParams": Array [],
+            "logs": Array [],
+            "times": Array [],
+          }
+        `);
       }
     });
 
@@ -55,7 +62,14 @@ describe('jwt service', () => {
           errorParams: err.params,
           logs: log.mock.calls,
           times: time.mock.calls,
-        }).toMatchSnapshot();
+        }).toMatchInlineSnapshot(`
+          Object {
+            "errorCode": "E_NO_JWT_ALGORITHMS",
+            "errorParams": Array [],
+            "logs": Array [],
+            "times": Array [],
+          }
+        `);
       }
     });
 
@@ -79,7 +93,14 @@ describe('jwt service', () => {
           errorParams: err.params,
           logs: log.mock.calls,
           times: time.mock.calls,
-        }).toMatchSnapshot();
+        }).toMatchInlineSnapshot(`
+          Object {
+            "errorCode": "E_BAD_JWT_DURATION",
+            "errorParams": Array [],
+            "logs": Array [],
+            "times": Array [],
+          }
+        `);
       }
     });
 
@@ -104,7 +125,17 @@ describe('jwt service', () => {
           errorParams: err.params,
           logs: log.mock.calls,
           times: time.mock.calls,
-        }).toMatchSnapshot();
+        }).toMatchInlineSnapshot(`
+          Object {
+            "errorCode": "E_BAD_JWT_TOLERANCE",
+            "errorParams": Array [
+              "",
+              "val is not a non-empty string or a valid number. val=\\"\\"",
+            ],
+            "logs": Array [],
+            "times": Array [],
+          }
+        `);
       }
     });
 
@@ -128,7 +159,16 @@ describe('jwt service', () => {
           errorParams: err.params,
           logs: log.mock.calls,
           times: time.mock.calls,
-        }).toMatchSnapshot();
+        }).toMatchInlineSnapshot(`
+          Object {
+            "errorCode": "E_BAD_JWT_DURATION",
+            "errorParams": Array [
+              "q",
+            ],
+            "logs": Array [],
+            "times": Array [],
+          }
+        `);
       }
     });
 
@@ -172,7 +212,71 @@ describe('jwt service', () => {
         token,
         logs: log.mock.calls,
         times: time.mock.calls,
-      }).toMatchSnapshot();
+      }).toMatchInlineSnapshot(`
+        Object {
+          "logs": Array [
+            Array [
+              "info",
+              "JWT service initialized!",
+            ],
+          ],
+          "times": Array [
+            Array [],
+          ],
+          "token": Object {
+            "expiresAt": 1390867200000,
+            "issuedAt": 1390694400000,
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
+            "validAt": 1390694400000,
+          },
+        }
+      `);
+    });
+
+    test('should work with an overriden config', async () => {
+      time.mockReturnValueOnce(new Date('2014-01-26T00:00:00Z').getTime());
+
+      const jwt = await initJWTService({
+        JWT_SECRET_ENV_NAME: 'REFRESH_JWT_SECRET',
+        ENV: {
+          REFRESH_JWT_SECRET: 'secret',
+        },
+        JWT: {
+          duration: '2d',
+          tolerance: '2h',
+          algorithms: ['HS256'],
+        },
+        log,
+        time,
+      });
+      const token = await jwt.sign({
+        userId: 2,
+        organisationId: 3,
+      });
+
+      expect({
+        token,
+        logs: log.mock.calls,
+        times: time.mock.calls,
+      }).toMatchInlineSnapshot(`
+        Object {
+          "logs": Array [
+            Array [
+              "info",
+              "JWT service initialized!",
+            ],
+          ],
+          "times": Array [
+            Array [],
+          ],
+          "token": Object {
+            "expiresAt": 1390867200000,
+            "issuedAt": 1390694400000,
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
+            "validAt": 1390694400000,
+          },
+        }
+      `);
     });
 
     test('should fail with a bad algorithm', async () => {
@@ -204,7 +308,26 @@ describe('jwt service', () => {
           errorParams: err.params,
           logs: log.mock.calls,
           times: time.mock.calls,
-        }).toMatchSnapshot();
+        }).toMatchInlineSnapshot(`
+          Object {
+            "errorCode": "E_UNKNOWN_ALGORYTHM",
+            "errorParams": Array [
+              "LOLALG",
+              Array [
+                "HS256",
+              ],
+            ],
+            "logs": Array [
+              Array [
+                "info",
+                "JWT service initialized!",
+              ],
+            ],
+            "times": Array [
+              Array [],
+            ],
+          }
+        `);
       }
     });
   });
@@ -234,7 +357,26 @@ describe('jwt service', () => {
         decoded,
         logs: log.mock.calls,
         times: time.mock.calls,
-      }).toMatchSnapshot();
+      }).toMatchInlineSnapshot(`
+        Object {
+          "decoded": Object {
+            "exp": 1390867200,
+            "iat": 1390694400,
+            "nbf": 1390694400,
+            "organisationId": 3,
+            "userId": 2,
+          },
+          "logs": Array [
+            Array [
+              "info",
+              "JWT service initialized!",
+            ],
+          ],
+          "times": Array [
+            Array [],
+          ],
+        }
+      `);
     });
 
     test('should fail after the validity duration', async () => {
@@ -265,7 +407,24 @@ describe('jwt service', () => {
           errorParams: err.params,
           logs: log.mock.calls,
           times: time.mock.calls,
-        }).toMatchSnapshot();
+        }).toMatchInlineSnapshot(`
+          Object {
+            "errorCode": "E_JWT_EXPIRED",
+            "errorParams": Array [
+              "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
+              "jwt expired",
+            ],
+            "logs": Array [
+              Array [
+                "info",
+                "JWT service initialized!",
+              ],
+            ],
+            "times": Array [
+              Array [],
+            ],
+          }
+        `);
       }
     });
 
@@ -292,7 +451,24 @@ describe('jwt service', () => {
           errorParams: err.params,
           logs: log.mock.calls,
           times: time.mock.calls,
-        }).toMatchSnapshot();
+        }).toMatchInlineSnapshot(`
+          Object {
+            "errorCode": "E_JWT_MALFORMED",
+            "errorParams": Array [
+              "kikooolol",
+              "jwt malformed",
+            ],
+            "logs": Array [
+              Array [
+                "info",
+                "JWT service initialized!",
+              ],
+            ],
+            "times": Array [
+              Array [],
+            ],
+          }
+        `);
       }
     });
   });

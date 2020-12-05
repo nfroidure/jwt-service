@@ -25,6 +25,8 @@ Instantiate the JWT service
 | Param | Type | Description |
 | --- | --- | --- |
 | services | <code>Object</code> | The services to inject |
+| [services.JWT_SECRET_ENV_NAME] | <code>function</code> | The environment variable name in which to pick-up the  JWT secret |
+| [services.ENV] | <code>Object</code> | An environment object |
 | services.JWT | <code>function</code> | The JWT service configuration object |
 | [services.log] | <code>function</code> | A logging function |
 | [services.time] | <code>function</code> | A function returning the current timestamp |
