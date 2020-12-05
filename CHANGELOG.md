@@ -1,3 +1,12 @@
+# [7.1.0](https://github.com/nfroidure/jwt-service/compare/v7.0.0...v7.1.0) (2020-12-05)
+
+
+### Features
+
+* **env:** allow to customize en var name for JWT secret ([68e596d](https://github.com/nfroidure/jwt-service/commit/68e596dcd8984fef61d6fa86739e99e502db46bb))
+
+
+
 # [7.0.0](https://github.com/nfroidure/jwt-service/compare/v6.0.3...v7.0.0) (2020-11-22)
 
 
