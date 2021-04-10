@@ -1,4 +1,4 @@
-import { autoService, name } from 'knifecycle';
+import { initializer } from 'knifecycle';
 import YError from 'yerror';
 import ms from 'ms';
 import jwt from 'jsonwebtoken';
@@ -21,8 +21,6 @@ export interface JWT_ENV {
   [name: string]: string;
 }
 
-export type Payload = Record<string, any>;
-
 /**
 @typedef JWTSignResult
 */
@@ -33,7 +31,7 @@ export type JWTSignResult = {
   validAt: number;
 };
 
-export interface JWTService<PAYLOAD extends Payload = Payload> {
+export interface JWTService<PAYLOAD extends Record<string, unknown>> {
   sign: (payload: PAYLOAD, algorithm?: string) => Promise<JWTSignResult>;
   verify: (token: string) => Promise<PAYLOAD>;
 }
@@ -49,34 +47,40 @@ export type JWTServiceDependencies = JWTServiceConfig & {
   log?: LogService;
 };
 
-export interface JWTServiceInitializer<PAYLOAD extends Payload = Payload> {
+export interface JWTServiceInitializer<
+  PAYLOAD extends Record<string, unknown>
+> {
   (dependencies: JWTServiceDependencies): Promise<JWTService<PAYLOAD>>;
 }
 
 /* Architecture Note #1: JWT service
 
 This JWT service is a simple wrapper around the `jsonwebtoken` NPM
- module. It add a level of abstraction simply providing a way to
+ module. It adds a level of abstraction simply providing a way to
  sign and verify JSON Web Tokens in my apps.
 
-It also cast error to `YError` ones and adds a tolerance for expired
- tokens so that clock drifts between instances won't be a problem.
-It also uses `Knifecycle` for a drop in dependency injection
- support in projetcs using Knifecycle.
+It also cast errors with `YError` ones and adds a tolerance for
+ expired tokens so that clock drifts between instances won't be
+ a problem.
+
+ It also uses `Knifecycle` for a drop in dependency injection
+ support in projects using Knifecycle.
 
 Finally, it deal with promises which are more convenient than the
  original API.
 */
-const wrappedInitializer: JWTServiceInitializer = name(
-  'jwt',
-  autoService(initJWT) as JWTServiceInitializer,
-);
 
-export default wrappedInitializer;
+export default initializer(
+  {
+    name: 'jwt',
+    type: 'service',
+    inject: ['?JWT_SECRET_ENV_NAME', '?ENV', 'JWT', '?log', '?time'],
+  },
+  initJWT,
+);
 
 /**
  * Instantiate the JWT service
- * @name initJWTService
  * @function
  * @param  {Object}     services
  * The services to inject
@@ -109,7 +113,7 @@ export default wrappedInitializer;
  *
  * const token = await jwt.sign({ my: 'payload' });
  */
-async function initJWT<PAYLOAD extends Payload = Payload>({
+async function initJWT<PAYLOAD extends Record<string, unknown>>({
   JWT_SECRET_ENV_NAME = DEFAULT_JWT_SECRET_ENV_NAME,
   ENV = DEFAULT_ENV,
   JWT,
@@ -128,8 +132,8 @@ async function initJWT<PAYLOAD extends Payload = Payload>({
   }
 
   /**
-  @typedef JWTService
-*/
+   * @typedef JWTService
+   */
   const jwtService: JWTService<PAYLOAD> = {
     sign,
     verify,

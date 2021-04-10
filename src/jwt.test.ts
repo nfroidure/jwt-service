@@ -191,7 +191,10 @@ describe('jwt service', () => {
     test('should work', async () => {
       time.mockReturnValueOnce(new Date('2014-01-26T00:00:00Z').getTime());
 
-      const jwt = await initJWTService({
+      const jwt = await initJWTService<{
+        userId: number;
+        organisationId: number;
+      }>({
         ENV: {
           JWT_SECRET: 'secret',
         },
