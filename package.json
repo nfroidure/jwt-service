@@ -2,10 +2,9 @@
   "name": "jwt-service",
   "version": "7.1.1",
   "description": "A simple wrapper for a simpler JWT surface API",
-  "module": "dist/jwt/mjs",
-  "types": "dist/jwt.d.ts",
-  "main": "dist/jwt/cjs",
-  "type": "module",
+  "main": "dist/index",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "exports": {
     "import": "./dist/jwt"
   },
@@ -86,7 +85,7 @@
     "jsonwebtoken": "^8.5.1",
     "knifecycle": "^11.1.1",
     "ms": "^2.1.3",
-    "yerror": "^6.0.0"
+    "yerror": "^6.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.14",
@@ -120,6 +119,15 @@
   "engines": {
     "node": ">=12.19.0"
   },
+  "files": [
+    "dist/**/*.js",
+    "dist/jwt.d.ts",
+    "dist",
+    "src",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md"
+  ],
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
@@ -150,26 +158,6 @@
       "jsarch"
     ]
   },
-  "jest": {
-    "coverageReporters": [
-      "lcov"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/"
-    ],
-    "roots": [
-      "<rootDir>/src"
-    ]
-  },
-  "files": [
-    "dist/**/*.js",
-    "dist/jwt.d.ts",
-    "dist",
-    "src",
-    "LICENSE",
-    "README.md",
-    "CHANGELOG.md"
-  ],
   "eslintConfig": {
     "extends": [
       "eslint:recommended",
@@ -204,13 +192,6 @@
     "singleQuote": true,
     "trailingComma": "all",
     "proseWrap": "always"
-  },
-  "jsarch": {
-    "parserOptions": {
-      "plugins": [
-        "typescript"
-      ]
-    }
   },
   "babel": {
     "plugins": [
@@ -259,5 +240,23 @@
       }
     },
     "sourceMaps": true
+  },
+  "jest": {
+    "coverageReporters": [
+      "lcov"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "roots": [
+      "<rootDir>/src"
+    ]
+  },
+  "jsarch": {
+    "parserOptions": {
+      "plugins": [
+        "typescript"
+      ]
+    }
   }
 }
