@@ -1,6 +1,6 @@
 {
   "name": "jwt-service",
-  "version": "7.1.1",
+  "version": "7.1.2",
   "description": "A simple wrapper for a simpler JWT surface API",
   "main": "dist/index",
   "module": "dist/index.mjs",

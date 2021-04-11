@@ -1,3 +1,12 @@
+## [7.1.2](https://github.com/nfroidure/jwt-service/compare/v7.1.1...v7.1.2) (2021-04-11)
+
+
+### Bug Fixes
+
+* **module:** fix the module exports ([5cd5674](https://github.com/nfroidure/jwt-service/commit/5cd56744667c441172cb8c1b6bcfe524ae087f4e))
+
+
+
 ## [7.1.1](https://github.com/nfroidure/jwt-service/compare/v7.1.0...v7.1.1) (2021-04-10)
 
 
