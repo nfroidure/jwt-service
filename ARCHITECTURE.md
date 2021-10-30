@@ -23,5 +23,5 @@ It also cast errors with `YError` ones and adds a tolerance for
 Finally, it deal with promises which are more convenient than the
  original API.
 
-[See in context](./src/jwt.ts#L56-L71)
+[See in context](./src/jwt.ts#L70-L85)
 

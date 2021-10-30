@@ -5,21 +5,24 @@ import jwt from 'jsonwebtoken';
 import type { SignOptions, Algorithm } from 'jsonwebtoken';
 import type { LogService, TimeService } from 'common-services';
 
-const DEFAULT_ENV: JWT_ENV = {};
-
 export const DEFAULT_JWT_SECRET_ENV_NAME = 'JWT_SECRET';
 
-export interface JWT_CONFIG {
-  secret?: string;
+export interface JWT_CONFIG<
+  T extends string extends T
+    ? never
+    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME
+> {
+  secretEnvName?: T;
   duration: string;
   tolerance?: string;
   algorithms: Array<string>;
 }
 
-export interface JWT_ENV {
-  JWT_SECRET?: string;
-  [name: string]: string;
-}
+export type JWT_ENV<
+  T extends string extends T
+    ? never
+    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME
+> = Record<T, string>;
 
 /**
 @typedef JWTSignResult
@@ -36,21 +39,32 @@ export interface JWTService<PAYLOAD extends Record<string, unknown>> {
   verify: (token: string) => Promise<PAYLOAD>;
 }
 
-export type JWTServiceConfig = {
-  JWT_SECRET_ENV_NAME?: string;
-  JWT: JWT_CONFIG;
+export type JWTServiceConfig<
+  T extends string extends T
+    ? never
+    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME
+> = {
+  JWT_SECRET_ENV_NAME?: T;
+  JWT: JWT_CONFIG<T>;
 };
 
-export type JWTServiceDependencies = JWTServiceConfig & {
-  ENV?: JWT_ENV;
+export type JWTServiceDependencies<
+  T extends string extends T
+    ? never
+    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME
+> = JWTServiceConfig<T> & {
+  ENV?: JWT_ENV<T>;
   time?: TimeService;
   log?: LogService;
 };
 
 export interface JWTServiceInitializer<
-  PAYLOAD extends Record<string, unknown>
+  PAYLOAD extends Record<string, unknown>,
+  T extends string extends T
+    ? never
+    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME
 > {
-  (dependencies: JWTServiceDependencies): Promise<JWTService<PAYLOAD>>;
+  (dependencies: JWTServiceDependencies<T>): Promise<JWTService<PAYLOAD>>;
 }
 
 /* Architecture Note #1: JWT service
@@ -113,16 +127,25 @@ export default initializer(
  *
  * const token = await jwt.sign({ my: 'payload' });
  */
-async function initJWT<PAYLOAD extends Record<string, unknown>>({
-  JWT_SECRET_ENV_NAME = DEFAULT_JWT_SECRET_ENV_NAME,
-  ENV = DEFAULT_ENV,
+async function initJWT<
+  PAYLOAD extends Record<string, unknown>,
+  T extends string extends T
+    ? never
+    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME
+>({
+  JWT_SECRET_ENV_NAME,
+  ENV,
   JWT,
   time = Date.now.bind(Date),
   log = noop,
-}: JWTServiceDependencies): Promise<JWTService<PAYLOAD>> {
+}: JWTServiceDependencies<T>): Promise<JWTService<PAYLOAD>> {
   const JWT_DURATION = readMS(JWT.duration, 'E_BAD_JWT_DURATION');
   const JWT_TOLERANCE = readMS(JWT.tolerance, 'E_BAD_JWT_TOLERANCE', 0);
-  const jwtSecret = ENV[JWT_SECRET_ENV_NAME] || JWT.secret;
+  const secretName =
+    JWT_SECRET_ENV_NAME ||
+    JWT.secretEnvName ||
+    (DEFAULT_JWT_SECRET_ENV_NAME as T);
+  const jwtSecret = ENV?.[secretName];
 
   if (!jwtSecret) {
     throw new YError('E_NO_JWT_SECRET');

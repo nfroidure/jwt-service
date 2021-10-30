@@ -286,8 +286,9 @@ describe('jwt service', () => {
       time.mockReturnValueOnce(new Date('2014-01-26T00:00:00Z').getTime());
 
       const jwt = await initJWTService({
+        ENV: { SECRET_NAME: 'secret' },
         JWT: {
-          secret: 'secret',
+          secretEnvName: 'SECRET_NAME',
           duration: '2d',
           tolerance: '2h',
           algorithms: ['HS256'],
@@ -340,8 +341,9 @@ describe('jwt service', () => {
       time.mockReturnValueOnce(new Date('2014-01-26T00:00:00Z').getTime());
 
       const jwt = await initJWTService({
+        ENV: { SECRET_NAME: 'secret' },
         JWT: {
-          secret: 'secret',
+          secretEnvName: 'SECRET_NAME',
           duration: '2d',
           tolerance: '2h',
           algorithms: ['HS256'],
@@ -386,8 +388,9 @@ describe('jwt service', () => {
       time.mockReturnValueOnce(new Date('2014-03-30T00:00:00Z').getTime());
 
       const jwt = await initJWTService({
+        ENV: { SECRET_NAME: 'secret' },
         JWT: {
-          secret: 'secret',
+          secretEnvName: 'SECRET_NAME',
           duration: '2d',
           tolerance: '2h',
           algorithms: ['HS256'],
@@ -435,8 +438,9 @@ describe('jwt service', () => {
       time.mockReturnValueOnce(new Date('2014-03-30T00:00:00Z').getTime());
 
       const jwt = await initJWTService({
+        ENV: { SECRET_NAME: 'secret' },
         JWT: {
-          secret: 'secret',
+          secretEnvName: 'SECRET_NAME',
           duration: '2d',
           tolerance: '2h',
           algorithms: ['HS256'],
