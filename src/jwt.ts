@@ -37,12 +37,12 @@ export interface JWTService<PAYLOAD extends Record<string, unknown>> {
 }
 
 export type JWTServiceConfig = {
-  ENV?: JWT_ENV;
   JWT_SECRET_ENV_NAME?: string;
   JWT: JWT_CONFIG;
 };
 
 export type JWTServiceDependencies = JWTServiceConfig & {
+  ENV?: JWT_ENV;
   time?: TimeService;
   log?: LogService;
 };
