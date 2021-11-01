@@ -1,4 +1,4 @@
-import { initializer } from 'knifecycle';
+import { Dependencies, Service, service, ServiceInitializer } from 'knifecycle';
 import YError from 'yerror';
 import ms from 'ms';
 import jwt from 'jsonwebtoken';
@@ -10,7 +10,7 @@ export const DEFAULT_JWT_SECRET_ENV_NAME = 'JWT_SECRET';
 export interface JWT_CONFIG<
   T extends string extends T
     ? never
-    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME
+    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
 > {
   secretEnvName?: T;
   duration: string;
@@ -21,7 +21,7 @@ export interface JWT_CONFIG<
 export type JWT_ENV<
   T extends string extends T
     ? never
-    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME
+    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
 > = Record<T, string>;
 
 /**
@@ -42,7 +42,7 @@ export interface JWTService<PAYLOAD extends Record<string, unknown>> {
 export type JWTServiceConfig<
   T extends string extends T
     ? never
-    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME
+    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
 > = {
   JWT_SECRET_ENV_NAME?: T;
   JWT: JWT_CONFIG<T>;
@@ -51,7 +51,7 @@ export type JWTServiceConfig<
 export type JWTServiceDependencies<
   T extends string extends T
     ? never
-    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME
+    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
 > = JWTServiceConfig<T> & {
   ENV?: JWT_ENV<T>;
   time?: TimeService;
@@ -62,7 +62,7 @@ export interface JWTServiceInitializer<
   PAYLOAD extends Record<string, unknown>,
   T extends string extends T
     ? never
-    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME
+    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
 > {
   (dependencies: JWTServiceDependencies<T>): Promise<JWTService<PAYLOAD>>;
 }
@@ -84,14 +84,11 @@ Finally, it deal with promises which are more convenient than the
  original API.
 */
 
-export default initializer(
-  {
-    name: 'jwt',
-    type: 'service',
-    inject: ['?JWT_SECRET_ENV_NAME', '?ENV', 'JWT', '?log', '?time'],
-  },
-  initJWT,
-);
+export default service(
+  initJWT as unknown as ServiceInitializer<Dependencies, Service>,
+  'jwt',
+  ['?JWT_SECRET_ENV_NAME', '?ENV', 'JWT', '?log', '?time'],
+) as typeof initJWT;
 
 /**
  * Instantiate the JWT service
@@ -131,7 +128,7 @@ async function initJWT<
   PAYLOAD extends Record<string, unknown>,
   T extends string extends T
     ? never
-    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME
+    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
 >({
   JWT_SECRET_ENV_NAME,
   ENV,
@@ -145,7 +142,7 @@ async function initJWT<
     JWT_SECRET_ENV_NAME ||
     JWT.secretEnvName ||
     (DEFAULT_JWT_SECRET_ENV_NAME as T);
-  const jwtSecret = ENV?.[secretName];
+  const jwtSecret = ENV?.[secretName] as string;
 
   if (!jwtSecret) {
     throw new YError('E_NO_JWT_SECRET');
@@ -196,12 +193,12 @@ async function initJWT<
         {
           algorithm,
         } as SignOptions,
-        (err, token: string) => {
+        (err, token: string | undefined) => {
           if (err) {
-            reject(YError.wrap(err, 'E_JWT', payload));
+            reject(YError.wrap(err as Error, 'E_JWT', payload));
             return;
           }
-          resolve(token);
+          resolve(token as string);
         },
       );
     });
@@ -229,7 +226,7 @@ async function initJWT<
         token,
         jwtSecret,
         {
-          algorithms: (JWT.algorithms as unknown) as Algorithm[],
+          algorithms: JWT.algorithms as unknown as Algorithm[],
           clockTolerance: Math.floor(JWT_TOLERANCE / 1000),
           clockTimestamp: Math.floor(time() / 1000),
         },
@@ -262,13 +259,13 @@ function noop(...args: unknown[]) {
 }
 
 function readMS(
-  value: string,
+  value: string | undefined,
   errorCode: string,
   defaultValue: number | undefined = undefined,
 ): number {
   const isRequired = 'undefined' === typeof defaultValue;
   const hasValue = 'undefined' !== typeof value;
-  const finalValue = hasValue ? value : '' + defaultValue;
+  const finalValue = hasValue ? (value as string) : '' + defaultValue;
 
   if (isRequired && !hasValue) {
     throw new YError(errorCode, value);
@@ -283,6 +280,6 @@ function readMS(
 
     return computedDuration;
   } catch (err) {
-    throw YError.wrap(err, errorCode, finalValue);
+    throw YError.wrap(err as Error, errorCode, finalValue);
   }
 }

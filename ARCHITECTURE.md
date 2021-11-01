@@ -5,9 +5,12 @@
 [//]: # ( )
 # Architecture Notes
 
+## Summary
+
+1. [JWT service](#1-jwt-service)
 
 
-## JWT service
+## 1. JWT service
 
 This JWT service is a simple wrapper around the `jsonwebtoken` NPM
  module. It adds a level of abstraction simply providing a way to
