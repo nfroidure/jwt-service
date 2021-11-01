@@ -1,3 +1,17 @@
+# [8.0.0](https://github.com/nfroidure/jwt-service/compare/v7.1.3...v8.0.0) (2021-11-01)
+
+
+### Bug Fixes
+
+* **types:** move the ENV from config to dependencies ([ad92aa1](https://github.com/nfroidure/jwt-service/commit/ad92aa111c3c4dd1e6e798218f4e1f622c5c1d7b))
+
+
+### Features
+
+* **types:** better typings ([2175756](https://github.com/nfroidure/jwt-service/commit/2175756d0be4d7643535eeef4b5b9f11735e5a06))
+
+
+
 ## [7.1.3](https://github.com/nfroidure/jwt-service/compare/v7.1.2...v7.1.3) (2021-04-11)
 
 
