@@ -8,7 +8,6 @@
 > A simple wrapper for a simpler JWT surface API
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/nfroidure/jwt-service/blob/master/LICENSE)
-[![Build status](https://travis-ci.com/nfroidure/jwt-service.svg?branch=master)](https://travis-ci.com/github/nfroidure/jwt-service)
 [![Coverage Status](https://coveralls.io/repos/github/nfroidure/jwt-service/badge.svg?branch=master)](https://coveralls.io/github/nfroidure/jwt-service?branch=master)
 
 
@@ -51,7 +50,7 @@ export default inject(
 ## Functions
 
 <dl>
-<dt><a href="#default">default(services)</a> ⇒ <code><a href="#JWTService">Promise.&lt;JWTService&gt;</a></code></dt>
+<dt><a href="#initJWT">initJWT(services)</a> ⇒ <code><a href="#JWTService">Promise.&lt;JWTService&gt;</a></code></dt>
 <dd><p>Instantiate the JWT service</p>
 </dd>
 </dl>
@@ -63,9 +62,9 @@ export default inject(
 <dd></dd>
 </dl>
 
-<a name="default"></a>
+<a name="initJWT"></a>
 
-## default(services) ⇒ [<code>Promise.&lt;JWTService&gt;</code>](#JWTService)
+## initJWT(services) ⇒ [<code>Promise.&lt;JWTService&gt;</code>](#JWTService)
 Instantiate the JWT service
 
 **Kind**: global function  

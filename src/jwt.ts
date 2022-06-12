@@ -1,7 +1,8 @@
-import { Dependencies, Service, service, ServiceInitializer } from 'knifecycle';
-import YError from 'yerror';
+import { service } from 'knifecycle';
+import { YError } from 'yerror';
 import ms from 'ms';
 import jwt from 'jsonwebtoken';
+import type { Dependencies, Service, ServiceInitializer } from 'knifecycle';
 import type { SignOptions, Algorithm } from 'jsonwebtoken';
 import type { LogService, TimeService } from 'common-services';
 

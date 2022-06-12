@@ -1,10 +1,12 @@
-import YError from 'yerror';
-import initJWTService from './jwt';
-import type { JWT_CONFIG } from './jwt';
+import { jest } from '@jest/globals';
+import { YError } from 'yerror';
+import initJWTService from './jwt.js';
+import type { JWT_CONFIG } from './jwt.js';
+import type { LogService, TimeService } from 'common-services';
 
 describe('jwt service', () => {
-  const log = jest.fn();
-  const time = jest.fn();
+  const log = jest.fn<LogService>();
+  const time = jest.fn<TimeService>();
 
   afterEach(() => {
     log.mockReset();

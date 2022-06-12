@@ -2,7 +2,7 @@
 ## Functions
 
 <dl>
-<dt><a href="#default">default(services)</a> ⇒ <code><a href="#JWTService">Promise.&lt;JWTService&gt;</a></code></dt>
+<dt><a href="#initJWT">initJWT(services)</a> ⇒ <code><a href="#JWTService">Promise.&lt;JWTService&gt;</a></code></dt>
 <dd><p>Instantiate the JWT service</p>
 </dd>
 </dl>
@@ -14,9 +14,9 @@
 <dd></dd>
 </dl>
 
-<a name="default"></a>
+<a name="initJWT"></a>
 
-## default(services) ⇒ [<code>Promise.&lt;JWTService&gt;</code>](#JWTService)
+## initJWT(services) ⇒ [<code>Promise.&lt;JWTService&gt;</code>](#JWTService)
 Instantiate the JWT service
 
 **Kind**: global function  
