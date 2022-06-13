@@ -15,8 +15,6 @@
         "dist"
       ],
       "bundleFiles": [
-        "dist/**/*.js",
-        "dist/jwt.d.ts",
         "dist",
         "src"
       ]
@@ -105,8 +103,6 @@
     "node": ">=16.15.0"
   },
   "files": [
-    "dist/**/*.js",
-    "dist/jwt.d.ts",
     "dist",
     "src",
     "LICENSE",
@@ -172,54 +168,6 @@
     "singleQuote": true,
     "trailingComma": "all",
     "proseWrap": "always"
-  },
-  "babel": {
-    "plugins": [
-      "@babel/proposal-class-properties",
-      "@babel/plugin-proposal-object-rest-spread"
-    ],
-    "presets": [
-      "@babel/typescript",
-      [
-        "@babel/env",
-        {
-          "targets": {
-            "node": "16.15.0"
-          }
-        }
-      ]
-    ],
-    "env": {
-      "cjs": {
-        "presets": [
-          [
-            "@babel/env",
-            {
-              "targets": {
-                "node": "10"
-              },
-              "modules": "commonjs"
-            }
-          ]
-        ],
-        "comments": true
-      },
-      "mjs": {
-        "presets": [
-          [
-            "@babel/env",
-            {
-              "targets": {
-                "node": "12"
-              },
-              "modules": false
-            }
-          ]
-        ],
-        "comments": false
-      }
-    },
-    "sourceMaps": true
   },
   "jest": {
     "coverageReporters": [

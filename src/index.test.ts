@@ -1,7 +1,7 @@
 import { jest } from '@jest/globals';
 import { YError } from 'yerror';
-import initJWTService from './jwt.js';
-import type { JWT_CONFIG } from './jwt.js';
+import initJWTService from './index.js';
+import type { JWT_CONFIG } from './index.js';
 import type { LogService, TimeService } from 'common-services';
 
 describe('jwt service', () => {
