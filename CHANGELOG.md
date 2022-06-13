@@ -1,3 +1,12 @@
+## [9.0.1](https://github.com/nfroidure/jwt-service/compare/v9.0.0...v9.0.1) (2022-06-13)
+
+
+### Bug Fixes
+
+* **build:** fix the built module paths ([a757f19](https://github.com/nfroidure/jwt-service/commit/a757f190bfac5c491ef45f4636ff52736031d358))
+
+
+
 # [9.0.0](https://github.com/nfroidure/jwt-service/compare/v8.0.1...v9.0.0) (2022-06-12)
 
 
