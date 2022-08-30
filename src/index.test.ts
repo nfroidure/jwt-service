@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { describe, test, afterEach, jest, expect } from '@jest/globals';
 import { YError } from 'yerror';
 import initJWTService from './index.js';
 import type { JWT_CONFIG } from './index.js';
@@ -33,11 +33,11 @@ describe('jwt service', () => {
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
-          Object {
+          {
             "errorCode": "E_NO_JWT_SECRET",
-            "errorParams": Array [],
-            "logs": Array [],
-            "times": Array [],
+            "errorParams": [],
+            "logs": [],
+            "times": [],
           }
         `);
       }
@@ -65,11 +65,11 @@ describe('jwt service', () => {
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
-          Object {
+          {
             "errorCode": "E_NO_JWT_ALGORITHMS",
-            "errorParams": Array [],
-            "logs": Array [],
-            "times": Array [],
+            "errorParams": [],
+            "logs": [],
+            "times": [],
           }
         `);
       }
@@ -96,11 +96,11 @@ describe('jwt service', () => {
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
-          Object {
+          {
             "errorCode": "E_BAD_JWT_DURATION",
-            "errorParams": Array [],
-            "logs": Array [],
-            "times": Array [],
+            "errorParams": [],
+            "logs": [],
+            "times": [],
           }
         `);
       }
@@ -128,14 +128,14 @@ describe('jwt service', () => {
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
-          Object {
+          {
             "errorCode": "E_BAD_JWT_TOLERANCE",
-            "errorParams": Array [
+            "errorParams": [
               "",
-              "val is not a non-empty string or a valid number. val=\\"\\"",
+              "val is not a non-empty string or a valid number. val=""",
             ],
-            "logs": Array [],
-            "times": Array [],
+            "logs": [],
+            "times": [],
           }
         `);
       }
@@ -162,13 +162,13 @@ describe('jwt service', () => {
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
-          Object {
+          {
             "errorCode": "E_BAD_JWT_DURATION",
-            "errorParams": Array [
+            "errorParams": [
               "q",
             ],
-            "logs": Array [],
-            "times": Array [],
+            "logs": [],
+            "times": [],
           }
         `);
       }
@@ -218,17 +218,17 @@ describe('jwt service', () => {
         logs: log.mock.calls,
         times: time.mock.calls,
       }).toMatchInlineSnapshot(`
-        Object {
-          "logs": Array [
-            Array [
+        {
+          "logs": [
+            [
               "info",
               "JWT service initialized!",
             ],
           ],
-          "times": Array [
-            Array [],
+          "times": [
+            [],
           ],
-          "token": Object {
+          "token": {
             "expiresAt": 1390867200000,
             "issuedAt": 1390694400000,
             "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
@@ -264,17 +264,17 @@ describe('jwt service', () => {
         logs: log.mock.calls,
         times: time.mock.calls,
       }).toMatchInlineSnapshot(`
-        Object {
-          "logs": Array [
-            Array [
+        {
+          "logs": [
+            [
               "info",
               "JWT service initialized!",
             ],
           ],
-          "times": Array [
-            Array [],
+          "times": [
+            [],
           ],
-          "token": Object {
+          "token": {
             "expiresAt": 1390867200000,
             "issuedAt": 1390694400000,
             "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
@@ -315,22 +315,22 @@ describe('jwt service', () => {
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
-          Object {
+          {
             "errorCode": "E_UNKNOWN_ALGORYTHM",
-            "errorParams": Array [
+            "errorParams": [
               "LOLALG",
-              Array [
+              [
                 "HS256",
               ],
             ],
-            "logs": Array [
-              Array [
+            "logs": [
+              [
                 "info",
                 "JWT service initialized!",
               ],
             ],
-            "times": Array [
-              Array [],
+            "times": [
+              [],
             ],
           }
         `);
@@ -365,22 +365,22 @@ describe('jwt service', () => {
         logs: log.mock.calls,
         times: time.mock.calls,
       }).toMatchInlineSnapshot(`
-        Object {
-          "decoded": Object {
+        {
+          "decoded": {
             "exp": 1390867200,
             "iat": 1390694400,
             "nbf": 1390694400,
             "organisationId": 3,
             "userId": 2,
           },
-          "logs": Array [
-            Array [
+          "logs": [
+            [
               "info",
               "JWT service initialized!",
             ],
           ],
-          "times": Array [
-            Array [],
+          "times": [
+            [],
           ],
         }
       `);
@@ -416,20 +416,20 @@ describe('jwt service', () => {
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
-          Object {
+          {
             "errorCode": "E_JWT_EXPIRED",
-            "errorParams": Array [
+            "errorParams": [
               "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
               "jwt expired",
             ],
-            "logs": Array [
-              Array [
+            "logs": [
+              [
                 "info",
                 "JWT service initialized!",
               ],
             ],
-            "times": Array [
-              Array [],
+            "times": [
+              [],
             ],
           }
         `);
@@ -461,20 +461,20 @@ describe('jwt service', () => {
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
-          Object {
+          {
             "errorCode": "E_JWT_MALFORMED",
-            "errorParams": Array [
+            "errorParams": [
               "kikooolol",
               "jwt malformed",
             ],
-            "logs": Array [
-              Array [
+            "logs": [
+              [
                 "info",
                 "JWT service initialized!",
               ],
             ],
-            "times": Array [
-              Array [],
+            "times": [
+              [],
             ],
           }
         `);
