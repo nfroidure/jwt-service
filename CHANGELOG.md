@@ -1,3 +1,12 @@
+## [9.0.2](https://github.com/nfroidure/jwt-service/compare/v9.0.1...v9.0.2) (2022-08-30)
+
+
+### Bug Fixes
+
+* **types:** fix types with new jest version ([5582c1c](https://github.com/nfroidure/jwt-service/commit/5582c1ca5c3cdef29db3cb12037de07b5cdf35b7))
+
+
+
 ## [9.0.1](https://github.com/nfroidure/jwt-service/compare/v9.0.0...v9.0.1) (2022-06-13)
 
 
