@@ -1,3 +1,12 @@
+## [9.0.3](https://github.com/nfroidure/jwt-service/compare/v9.0.2...v9.0.3) (2022-12-30)
+
+
+### Bug Fixes
+
+* **security:** fix security issue with jsonwebtoken ([05316d1](https://github.com/nfroidure/jwt-service/commit/05316d1c92a03fe2d67a560c7bd134c91940a48b))
+
+
+
 ## [9.0.2](https://github.com/nfroidure/jwt-service/compare/v9.0.1...v9.0.2) (2022-08-30)
 
 
