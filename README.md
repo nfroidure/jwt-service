@@ -7,8 +7,8 @@
 # jwt-service
 > A simple wrapper for a simpler JWT surface API
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/nfroidure/jwt-service/blob/master/LICENSE)
-[![Coverage Status](https://coveralls.io/repos/github/nfroidure/jwt-service/badge.svg?branch=master)](https://coveralls.io/github/nfroidure/jwt-service?branch=master)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/nfroidure/jwt-service/blob/main/LICENSE)
+[![Coverage Status](https://coveralls.io/repos/github/nfroidure/jwt-service/badge.svg?branch=main)](https://coveralls.io/github/nfroidure/jwt-service?branch=main)
 
 
 [//]: # (::contents:start)
@@ -143,4 +143,4 @@ const payload = await jwt.verify('my.jwt.token');
 - [Nicolas Froidure](https://insertafter.com/en/index.html)
 
 # License
-[MIT](https://github.com/nfroidure/jwt-service/blob/master/LICENSE)
+[MIT](https://github.com/nfroidure/jwt-service/blob/main/LICENSE)
