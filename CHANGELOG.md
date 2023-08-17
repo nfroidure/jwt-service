@@ -1,3 +1,12 @@
+## [10.0.2](https://github.com/nfroidure/jwt-service/compare/v10.0.1...v10.0.2) (2023-08-17)
+
+
+### Bug Fixes
+
+* **env:** env vars are optional ([49ca48c](https://github.com/nfroidure/jwt-service/commit/49ca48c603ab4fc1752b97b7ee687d5f03abb295))
+
+
+
 ## [10.0.1](https://github.com/nfroidure/jwt-service/compare/v10.0.0...v10.0.1) (2023-08-16)
 
 
