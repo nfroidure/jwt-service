@@ -19,11 +19,11 @@ export interface JWT_CONFIG<
   algorithms: Array<string>;
 }
 
-export type JWT_ENV<
+export type JWTEnvVars<
   T extends string extends T
     ? never
     : string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
-> = Record<T, string>;
+> = Partial<Record<T, string>>;
 
 /**
 @typedef JWTSignResult
@@ -54,7 +54,7 @@ export type JWTServiceDependencies<
     ? never
     : string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
 > = JWTServiceConfig<T> & {
-  ENV?: JWT_ENV<T>;
+  ENV?: JWTEnvVars<T>;
   time?: TimeService;
   log?: LogService;
 };
@@ -146,9 +146,11 @@ async function initJWT<
   const jwtSecret = ENV?.[secretName] as string;
 
   if (!jwtSecret) {
-    throw new YError('E_NO_JWT_SECRET');
+    log('error', `❌ - No "${secretName}" env var set.`);
+    throw new YError('E_NO_JWT_SECRET', secretName);
   }
   if (!(JWT.algorithms && JWT.algorithms.length)) {
+    log('error', `❌ - At least one algorithm is required.`);
     throw new YError('E_NO_JWT_ALGORITHMS');
   }
 
@@ -250,7 +252,7 @@ async function initJWT<
     });
   }
 
-  log('info', 'JWT service initialized!');
+  log('info', '🔒 - JWT service initialized!');
 
   return jwtService;
 }

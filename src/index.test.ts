@@ -33,13 +33,20 @@ describe('jwt service', () => {
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
-          {
-            "errorCode": "E_NO_JWT_SECRET",
-            "errorParams": [],
-            "logs": [],
-            "times": [],
-          }
-        `);
+{
+  "errorCode": "E_NO_JWT_SECRET",
+  "errorParams": [
+    "JWT_SECRET",
+  ],
+  "logs": [
+    [
+      "error",
+      "❌ - No "JWT_SECRET" env var set.",
+    ],
+  ],
+  "times": [],
+}
+`);
       }
     });
 
@@ -65,13 +72,18 @@ describe('jwt service', () => {
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
-          {
-            "errorCode": "E_NO_JWT_ALGORITHMS",
-            "errorParams": [],
-            "logs": [],
-            "times": [],
-          }
-        `);
+{
+  "errorCode": "E_NO_JWT_ALGORITHMS",
+  "errorParams": [],
+  "logs": [
+    [
+      "error",
+      "❌ - At least one algorithm is required.",
+    ],
+  ],
+  "times": [],
+}
+`);
       }
     });
 
@@ -218,24 +230,24 @@ describe('jwt service', () => {
         logs: log.mock.calls,
         times: time.mock.calls,
       }).toMatchInlineSnapshot(`
-        {
-          "logs": [
-            [
-              "info",
-              "JWT service initialized!",
-            ],
-          ],
-          "times": [
-            [],
-          ],
-          "token": {
-            "expiresAt": 1390867200000,
-            "issuedAt": 1390694400000,
-            "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
-            "validAt": 1390694400000,
-          },
-        }
-      `);
+{
+  "logs": [
+    [
+      "info",
+      "🔒 - JWT service initialized!",
+    ],
+  ],
+  "times": [
+    [],
+  ],
+  "token": {
+    "expiresAt": 1390867200000,
+    "issuedAt": 1390694400000,
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
+    "validAt": 1390694400000,
+  },
+}
+`);
     });
 
     test('should work with an overriden config', async () => {
@@ -264,24 +276,24 @@ describe('jwt service', () => {
         logs: log.mock.calls,
         times: time.mock.calls,
       }).toMatchInlineSnapshot(`
-        {
-          "logs": [
-            [
-              "info",
-              "JWT service initialized!",
-            ],
-          ],
-          "times": [
-            [],
-          ],
-          "token": {
-            "expiresAt": 1390867200000,
-            "issuedAt": 1390694400000,
-            "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
-            "validAt": 1390694400000,
-          },
-        }
-      `);
+{
+  "logs": [
+    [
+      "info",
+      "🔒 - JWT service initialized!",
+    ],
+  ],
+  "times": [
+    [],
+  ],
+  "token": {
+    "expiresAt": 1390867200000,
+    "issuedAt": 1390694400000,
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
+    "validAt": 1390694400000,
+  },
+}
+`);
     });
 
     test('should fail with a bad algorithm', async () => {
@@ -315,25 +327,25 @@ describe('jwt service', () => {
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
-          {
-            "errorCode": "E_UNKNOWN_ALGORYTHM",
-            "errorParams": [
-              "LOLALG",
-              [
-                "HS256",
-              ],
-            ],
-            "logs": [
-              [
-                "info",
-                "JWT service initialized!",
-              ],
-            ],
-            "times": [
-              [],
-            ],
-          }
-        `);
+{
+  "errorCode": "E_UNKNOWN_ALGORYTHM",
+  "errorParams": [
+    "LOLALG",
+    [
+      "HS256",
+    ],
+  ],
+  "logs": [
+    [
+      "info",
+      "🔒 - JWT service initialized!",
+    ],
+  ],
+  "times": [
+    [],
+  ],
+}
+`);
       }
     });
   });
@@ -365,25 +377,25 @@ describe('jwt service', () => {
         logs: log.mock.calls,
         times: time.mock.calls,
       }).toMatchInlineSnapshot(`
-        {
-          "decoded": {
-            "exp": 1390867200,
-            "iat": 1390694400,
-            "nbf": 1390694400,
-            "organisationId": 3,
-            "userId": 2,
-          },
-          "logs": [
-            [
-              "info",
-              "JWT service initialized!",
-            ],
-          ],
-          "times": [
-            [],
-          ],
-        }
-      `);
+{
+  "decoded": {
+    "exp": 1390867200,
+    "iat": 1390694400,
+    "nbf": 1390694400,
+    "organisationId": 3,
+    "userId": 2,
+  },
+  "logs": [
+    [
+      "info",
+      "🔒 - JWT service initialized!",
+    ],
+  ],
+  "times": [
+    [],
+  ],
+}
+`);
     });
 
     test('should fail after the validity duration', async () => {
@@ -416,23 +428,23 @@ describe('jwt service', () => {
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
-          {
-            "errorCode": "E_JWT_EXPIRED",
-            "errorParams": [
-              "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
-              "jwt expired",
-            ],
-            "logs": [
-              [
-                "info",
-                "JWT service initialized!",
-              ],
-            ],
-            "times": [
-              [],
-            ],
-          }
-        `);
+{
+  "errorCode": "E_JWT_EXPIRED",
+  "errorParams": [
+    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
+    "jwt expired",
+  ],
+  "logs": [
+    [
+      "info",
+      "🔒 - JWT service initialized!",
+    ],
+  ],
+  "times": [
+    [],
+  ],
+}
+`);
       }
     });
 
@@ -461,23 +473,23 @@ describe('jwt service', () => {
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
-          {
-            "errorCode": "E_JWT_MALFORMED",
-            "errorParams": [
-              "kikooolol",
-              "jwt malformed",
-            ],
-            "logs": [
-              [
-                "info",
-                "JWT service initialized!",
-              ],
-            ],
-            "times": [
-              [],
-            ],
-          }
-        `);
+{
+  "errorCode": "E_JWT_MALFORMED",
+  "errorParams": [
+    "kikooolol",
+    "jwt malformed",
+  ],
+  "logs": [
+    [
+      "info",
+      "🔒 - JWT service initialized!",
+    ],
+  ],
+  "times": [
+    [],
+  ],
+}
+`);
       }
     });
   });
