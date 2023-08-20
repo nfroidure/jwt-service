@@ -1,3 +1,12 @@
+## [10.0.4](https://github.com/nfroidure/jwt-service/compare/v10.0.3...v10.0.4) (2023-08-20)
+
+
+### Bug Fixes
+
+* **log:** log to stderr only ([143cb06](https://github.com/nfroidure/jwt-service/commit/143cb06c5cadd1c8bdc91e8ec4820b44e5b32625))
+
+
+
 ## [10.0.3](https://github.com/nfroidure/jwt-service/compare/v10.0.2...v10.0.3) (2023-08-20)
 
 
