@@ -233,7 +233,7 @@ describe('jwt service', () => {
 {
   "logs": [
     [
-      "info",
+      "warning",
       "🔒 - JWT service initialized!",
     ],
   ],
@@ -279,7 +279,7 @@ describe('jwt service', () => {
 {
   "logs": [
     [
-      "info",
+      "warning",
       "🔒 - JWT service initialized!",
     ],
   ],
@@ -337,7 +337,7 @@ describe('jwt service', () => {
   ],
   "logs": [
     [
-      "info",
+      "warning",
       "🔒 - JWT service initialized!",
     ],
   ],
@@ -387,7 +387,7 @@ describe('jwt service', () => {
   },
   "logs": [
     [
-      "info",
+      "warning",
       "🔒 - JWT service initialized!",
     ],
   ],
@@ -436,7 +436,7 @@ describe('jwt service', () => {
   ],
   "logs": [
     [
-      "info",
+      "warning",
       "🔒 - JWT service initialized!",
     ],
   ],
@@ -481,7 +481,7 @@ describe('jwt service', () => {
   ],
   "logs": [
     [
-      "info",
+      "warning",
       "🔒 - JWT service initialized!",
     ],
   ],

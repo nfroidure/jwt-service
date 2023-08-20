@@ -252,7 +252,7 @@ async function initJWT<
     });
   }
 
-  log('info', '🔒 - JWT service initialized!');
+  log('warning', '🔒 - JWT service initialized!');
 
   return jwtService;
 }
