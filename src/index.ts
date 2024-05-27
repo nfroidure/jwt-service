@@ -9,9 +9,7 @@ import type { LogService, TimeService } from 'common-services';
 export const DEFAULT_JWT_SECRET_ENV_NAME = 'JWT_SECRET';
 
 export interface JWT_CONFIG<
-  T extends string extends T
-    ? never
-    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
+  T extends string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
 > {
   secretEnvName?: T;
   duration: string;
@@ -19,11 +17,8 @@ export interface JWT_CONFIG<
   algorithms: Array<string>;
 }
 
-export type JWTEnvVars<
-  T extends string extends T
-    ? never
-    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
-> = Partial<Record<T, string>>;
+export type JWTEnvVars<T extends string = typeof DEFAULT_JWT_SECRET_ENV_NAME> =
+  Partial<Record<T, string>>;
 
 /**
 @typedef JWTSignResult
@@ -41,18 +36,14 @@ export interface JWTService<PAYLOAD extends Record<string, unknown>> {
 }
 
 export type JWTServiceConfig<
-  T extends string extends T
-    ? never
-    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
+  T extends string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
 > = {
   JWT_SECRET_ENV_NAME?: T;
   JWT: JWT_CONFIG<T>;
 };
 
 export type JWTServiceDependencies<
-  T extends string extends T
-    ? never
-    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
+  T extends string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
 > = JWTServiceConfig<T> & {
   ENV?: JWTEnvVars<T>;
   time?: TimeService;
@@ -61,9 +52,7 @@ export type JWTServiceDependencies<
 
 export interface JWTServiceInitializer<
   PAYLOAD extends Record<string, unknown>,
-  T extends string extends T
-    ? never
-    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
+  T extends string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
 > {
   (dependencies: JWTServiceDependencies<T>): Promise<JWTService<PAYLOAD>>;
 }
@@ -127,9 +116,7 @@ export default service(
  */
 async function initJWT<
   PAYLOAD extends Record<string, unknown>,
-  T extends string extends T
-    ? never
-    : string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
+  T extends string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
 >({
   JWT_SECRET_ENV_NAME,
   ENV,

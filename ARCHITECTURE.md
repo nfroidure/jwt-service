@@ -26,5 +26,5 @@ It also cast errors with `YError` ones and adds a tolerance for
 Finally, it deal with promises which are more convenient than the
  original API.
 
-[See in context](./src/index.ts#L71-L86)
+[See in context](./src/index.ts#L60-L75)
 

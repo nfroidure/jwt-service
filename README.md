@@ -8,7 +8,6 @@
 > A simple wrapper for a simpler JWT surface API
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/nfroidure/jwt-service/blob/main/LICENSE)
-[![Coverage Status](https://coveralls.io/repos/github/nfroidure/jwt-service/badge.svg?branch=main)](https://coveralls.io/github/nfroidure/jwt-service?branch=main)
 
 
 [//]: # (::contents:start)
