@@ -1,10 +1,14 @@
-import { service } from 'knifecycle';
+import {
+  service,
+  location,
+  type Dependencies,
+  type Service,
+  type ServiceInitializer,
+} from 'knifecycle';
 import { YError } from 'yerror';
 import ms from 'ms';
-import jwt from 'jsonwebtoken';
-import type { Dependencies, Service, ServiceInitializer } from 'knifecycle';
-import type { SignOptions, Algorithm } from 'jsonwebtoken';
-import type { LogService, TimeService } from 'common-services';
+import jwt, { type SignOptions, type Algorithm } from 'jsonwebtoken';
+import { noop, type LogService, type TimeService } from 'common-services';
 
 export const DEFAULT_JWT_SECRET_ENV_NAME = 'JWT_SECRET';
 
@@ -74,10 +78,13 @@ Finally, it deal with promises which are more convenient than the
  original API.
 */
 
-export default service(
-  initJWT as unknown as ServiceInitializer<Dependencies, Service>,
-  'jwt',
-  ['?JWT_SECRET_ENV_NAME', '?ENV', 'JWT', '?log', '?time'],
+export default location(
+  service(
+    initJWT as unknown as ServiceInitializer<Dependencies, Service>,
+    'jwt',
+    ['?JWT_SECRET_ENV_NAME', '?ENV', 'JWT', '?log', '?time'],
+  ),
+  import.meta.url,
 ) as typeof initJWT;
 
 /**
@@ -242,10 +249,6 @@ async function initJWT<
   log('warning', '🔒 - JWT service initialized!');
 
   return jwtService;
-}
-
-function noop(...args: unknown[]) {
-  args;
 }
 
 function readMS(
