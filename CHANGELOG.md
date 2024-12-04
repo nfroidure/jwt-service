@@ -1,3 +1,7 @@
+# [11.0.0](https://github.com/nfroidure/jwt-service/compare/v10.1.1...v11.0.0) (2024-12-04)
+
+
+
 ## [10.1.1](https://github.com/nfroidure/jwt-service/compare/v10.1.0...v10.1.1) (2024-07-15)
 
 
