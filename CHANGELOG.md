@@ -1,3 +1,12 @@
+## [11.0.1](https://github.com/nfroidure/jwt-service/compare/v11.0.0...v11.0.1) (2025-02-04)
+
+
+### Bug Fixes
+
+* **types:** update types to fix builds ([c5a9fb1](https://github.com/nfroidure/jwt-service/commit/c5a9fb14101fd2309ca142fd43d146b0e5544b06))
+
+
+
 # [11.0.0](https://github.com/nfroidure/jwt-service/compare/v10.1.1...v11.0.0) (2024-12-04)
 
 
