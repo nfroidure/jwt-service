@@ -6,7 +6,7 @@ import {
   type ServiceInitializer,
 } from 'knifecycle';
 import { YError } from 'yerror';
-import ms from 'ms';
+import ms, { type StringValue } from 'ms';
 import jwt, { type SignOptions, type Algorithm } from 'jsonwebtoken';
 import { noop, type LogService, type TimeService } from 'common-services';
 
@@ -16,8 +16,8 @@ export interface JWT_CONFIG<
   T extends string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
 > {
   secretEnvName?: T;
-  duration: string;
-  tolerance?: string;
+  duration: StringValue;
+  tolerance?: StringValue;
   algorithms: Array<string>;
 }
 
@@ -252,13 +252,13 @@ async function initJWT<
 }
 
 function readMS(
-  value: string | undefined,
+  value: StringValue | undefined,
   errorCode: string,
   defaultValue: number | undefined = undefined,
 ): number {
   const isRequired = 'undefined' === typeof defaultValue;
   const hasValue = 'undefined' !== typeof value;
-  const finalValue = hasValue ? (value as string) : '' + defaultValue;
+  const finalValue: StringValue = hasValue ? value : `${defaultValue || 0}ms`;
 
   if (isRequired && !hasValue) {
     throw new YError(errorCode, value);

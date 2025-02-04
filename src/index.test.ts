@@ -96,7 +96,7 @@ describe('jwt service', () => {
           JWT: {
             tolerance: '2h',
             algorithms: ['HS256'],
-          } as JWT_CONFIG,
+          } as unknown as JWT_CONFIG,
           log,
           time,
         });
@@ -126,7 +126,7 @@ describe('jwt service', () => {
           },
           JWT: {
             duration: '2h',
-            tolerance: '',
+            tolerance: '' as unknown as '1d',
             algorithms: ['HS256'],
           },
           log,
@@ -160,7 +160,7 @@ describe('jwt service', () => {
             JWT_SECRET: 'test',
           },
           JWT: {
-            duration: 'q',
+            duration: 'q' as unknown as '1d',
             algorithms: ['HS256'],
           },
           log,
