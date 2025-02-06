@@ -1,3 +1,12 @@
+## [11.0.2](https://github.com/nfroidure/jwt-service/compare/v11.0.1...v11.0.2) (2025-02-06)
+
+
+### Bug Fixes
+
+* **types:** make the payload more extendable ([5632d38](https://github.com/nfroidure/jwt-service/commit/5632d38c6a9785911acdc1a87ebaea0271d78978))
+
+
+
 ## [11.0.1](https://github.com/nfroidure/jwt-service/compare/v11.0.0...v11.0.1) (2025-02-04)
 
 
