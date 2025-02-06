@@ -34,7 +34,7 @@ export type JWTSignResult = {
   validAt: number;
 };
 
-export interface JWTService<PAYLOAD extends Record<string, unknown>> {
+export interface JWTService<PAYLOAD extends object> {
   sign: (payload: PAYLOAD, algorithm?: string) => Promise<JWTSignResult>;
   verify: (token: string) => Promise<PAYLOAD>;
 }
@@ -55,7 +55,7 @@ export type JWTServiceDependencies<
 };
 
 export interface JWTServiceInitializer<
-  PAYLOAD extends Record<string, unknown>,
+  PAYLOAD extends object,
   T extends string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
 > {
   (dependencies: JWTServiceDependencies<T>): Promise<JWTService<PAYLOAD>>;
@@ -122,7 +122,7 @@ export default location(
  * const token = await jwt.sign({ my: 'payload' });
  */
 async function initJWT<
-  PAYLOAD extends Record<string, unknown>,
+  PAYLOAD extends object,
   T extends string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
 >({
   JWT_SECRET_ENV_NAME,
