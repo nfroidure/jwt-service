@@ -25,7 +25,7 @@
     ]
   },
   "name": "jwt-service",
-  "version": "11.0.2",
+  "version": "11.0.3",
   "description": "A simple wrapper for a simpler JWT surface API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
