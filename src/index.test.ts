@@ -29,24 +29,24 @@ describe('jwt service', () => {
       } catch (err) {
         expect({
           errorCode: (err as YError).code,
-          errorParams: (err as YError).params,
+          errorDebugValues: (err as YError).debugValues,
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
-{
-  "errorCode": "E_NO_JWT_SECRET",
-  "errorParams": [
-    "JWT_SECRET",
-  ],
-  "logs": [
-    [
-      "error",
-      "❌ - No "JWT_SECRET" env var set.",
-    ],
-  ],
-  "times": [],
-}
-`);
+         {
+           "errorCode": "E_NO_JWT_SECRET",
+           "errorDebugValues": [
+             "JWT_SECRET",
+           ],
+           "logs": [
+             [
+               "error",
+               "❌ - No "JWT_SECRET" env var set.",
+             ],
+           ],
+           "times": [],
+         }
+        `);
       }
     });
 
@@ -68,22 +68,22 @@ describe('jwt service', () => {
       } catch (err) {
         expect({
           errorCode: (err as YError).code,
-          errorParams: (err as YError).params,
+          errorDebugValues: (err as YError).debugValues,
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
-{
-  "errorCode": "E_NO_JWT_ALGORITHMS",
-  "errorParams": [],
-  "logs": [
-    [
-      "error",
-      "❌ - At least one algorithm is required.",
-    ],
-  ],
-  "times": [],
-}
-`);
+         {
+           "errorCode": "E_NO_JWT_ALGORITHMS",
+           "errorDebugValues": [],
+           "logs": [
+             [
+               "error",
+               "❌ - At least one algorithm is required.",
+             ],
+           ],
+           "times": [],
+         }
+        `);
       }
     });
 
@@ -104,13 +104,13 @@ describe('jwt service', () => {
       } catch (err) {
         expect({
           errorCode: (err as YError).code,
-          errorParams: (err as YError).params,
+          errorDebugValues: (err as YError).debugValues,
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
           {
             "errorCode": "E_BAD_JWT_DURATION",
-            "errorParams": [],
+            "errorDebugValues": [],
             "logs": [],
             "times": [],
           }
@@ -136,19 +136,18 @@ describe('jwt service', () => {
       } catch (err) {
         expect({
           errorCode: (err as YError).code,
-          errorParams: (err as YError).params,
+          errorDebugValues: (err as YError).debugValues,
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
-          {
-            "errorCode": "E_BAD_JWT_TOLERANCE",
-            "errorParams": [
-              "",
-              "val is not a non-empty string or a valid number. val=""",
-            ],
-            "logs": [],
-            "times": [],
-          }
+         {
+           "errorCode": "E_BAD_JWT_TOLERANCE",
+           "errorDebugValues": [
+             "",
+           ],
+           "logs": [],
+           "times": [],
+         }
         `);
       }
     });
@@ -170,13 +169,13 @@ describe('jwt service', () => {
       } catch (err) {
         expect({
           errorCode: (err as YError).code,
-          errorParams: (err as YError).params,
+          errorDebugValues: (err as YError).debugValues,
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
           {
             "errorCode": "E_BAD_JWT_DURATION",
-            "errorParams": [
+            "errorDebugValues": [
               "q",
             ],
             "logs": [],
@@ -230,24 +229,24 @@ describe('jwt service', () => {
         logs: log.mock.calls,
         times: time.mock.calls,
       }).toMatchInlineSnapshot(`
-{
-  "logs": [
-    [
-      "warning",
-      "🔒 - JWT service initialized!",
-    ],
-  ],
-  "times": [
-    [],
-  ],
-  "token": {
-    "expiresAt": 1390867200000,
-    "issuedAt": 1390694400000,
-    "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
-    "validAt": 1390694400000,
-  },
-}
-`);
+       {
+         "logs": [
+           [
+             "warning",
+             "🔒 - JWT service initialized!",
+           ],
+         ],
+         "times": [
+           [],
+         ],
+         "token": {
+           "expiresAt": 1390867200000,
+           "issuedAt": 1390694400000,
+           "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
+           "validAt": 1390694400000,
+         },
+       }
+      `);
     });
 
     test('should work with an overriden config', async () => {
@@ -276,24 +275,24 @@ describe('jwt service', () => {
         logs: log.mock.calls,
         times: time.mock.calls,
       }).toMatchInlineSnapshot(`
-{
-  "logs": [
-    [
-      "warning",
-      "🔒 - JWT service initialized!",
-    ],
-  ],
-  "times": [
-    [],
-  ],
-  "token": {
-    "expiresAt": 1390867200000,
-    "issuedAt": 1390694400000,
-    "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
-    "validAt": 1390694400000,
-  },
-}
-`);
+       {
+         "logs": [
+           [
+             "warning",
+             "🔒 - JWT service initialized!",
+           ],
+         ],
+         "times": [
+           [],
+         ],
+         "token": {
+           "expiresAt": 1390867200000,
+           "issuedAt": 1390694400000,
+           "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
+           "validAt": 1390694400000,
+         },
+       }
+      `);
     });
 
     test('should fail with a bad algorithm', async () => {
@@ -323,29 +322,29 @@ describe('jwt service', () => {
       } catch (err) {
         expect({
           errorCode: (err as YError).code,
-          errorParams: (err as YError).params,
+          errorDebugValues: (err as YError).debugValues,
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
-{
-  "errorCode": "E_UNKNOWN_ALGORYTHM",
-  "errorParams": [
-    "LOLALG",
-    [
-      "HS256",
-    ],
-  ],
-  "logs": [
-    [
-      "warning",
-      "🔒 - JWT service initialized!",
-    ],
-  ],
-  "times": [
-    [],
-  ],
-}
-`);
+         {
+           "errorCode": "E_UNKNOWN_ALGORYTHM",
+           "errorDebugValues": [
+             "LOLALG",
+             [
+               "HS256",
+             ],
+           ],
+           "logs": [
+             [
+               "warning",
+               "🔒 - JWT service initialized!",
+             ],
+           ],
+           "times": [
+             [],
+           ],
+         }
+        `);
       }
     });
   });
@@ -377,25 +376,25 @@ describe('jwt service', () => {
         logs: log.mock.calls,
         times: time.mock.calls,
       }).toMatchInlineSnapshot(`
-{
-  "decoded": {
-    "exp": 1390867200,
-    "iat": 1390694400,
-    "nbf": 1390694400,
-    "organisationId": 3,
-    "userId": 2,
-  },
-  "logs": [
-    [
-      "warning",
-      "🔒 - JWT service initialized!",
-    ],
-  ],
-  "times": [
-    [],
-  ],
-}
-`);
+       {
+         "decoded": {
+           "exp": 1390867200,
+           "iat": 1390694400,
+           "nbf": 1390694400,
+           "organisationId": 3,
+           "userId": 2,
+         },
+         "logs": [
+           [
+             "warning",
+             "🔒 - JWT service initialized!",
+           ],
+         ],
+         "times": [
+           [],
+         ],
+       }
+      `);
     });
 
     test('should fail after the validity duration', async () => {
@@ -424,27 +423,26 @@ describe('jwt service', () => {
       } catch (err) {
         expect({
           errorCode: (err as YError).code,
-          errorParams: (err as YError).params,
+          errorDebugValues: (err as YError).debugValues,
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
-{
-  "errorCode": "E_JWT_EXPIRED",
-  "errorParams": [
-    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
-    "jwt expired",
-  ],
-  "logs": [
-    [
-      "warning",
-      "🔒 - JWT service initialized!",
-    ],
-  ],
-  "times": [
-    [],
-  ],
-}
-`);
+         {
+           "errorCode": "E_JWT_EXPIRED",
+           "errorDebugValues": [
+             "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
+           ],
+           "logs": [
+             [
+               "warning",
+               "🔒 - JWT service initialized!",
+             ],
+           ],
+           "times": [
+             [],
+           ],
+         }
+        `);
       }
     });
 
@@ -469,27 +467,26 @@ describe('jwt service', () => {
       } catch (err) {
         expect({
           errorCode: (err as YError).code,
-          errorParams: (err as YError).params,
+          errorDebugValues: (err as YError).debugValues,
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
-{
-  "errorCode": "E_JWT_MALFORMED",
-  "errorParams": [
-    "kikooolol",
-    "jwt malformed",
-  ],
-  "logs": [
-    [
-      "warning",
-      "🔒 - JWT service initialized!",
-    ],
-  ],
-  "times": [
-    [],
-  ],
-}
-`);
+         {
+           "errorCode": "E_JWT_MALFORMED",
+           "errorDebugValues": [
+             "kikooolol",
+           ],
+           "logs": [
+             [
+               "warning",
+               "🔒 - JWT service initialized!",
+             ],
+           ],
+           "times": [
+             [],
+           ],
+         }
+        `);
       }
     });
   });

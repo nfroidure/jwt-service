@@ -4,6 +4,7 @@ import {
   type Dependencies,
   type Service,
   type ServiceInitializer,
+  type ServiceProperties,
 } from 'knifecycle';
 import { YError } from 'yerror';
 import ms, { type StringValue } from 'ms';
@@ -18,7 +19,7 @@ export interface JWT_CONFIG<
   secretEnvName?: T;
   duration: StringValue;
   tolerance?: StringValue;
-  algorithms: Array<string>;
+  algorithms: string[];
 }
 
 export type JWTEnvVars<T extends string = typeof DEFAULT_JWT_SECRET_ENV_NAME> =
@@ -27,24 +28,24 @@ export type JWTEnvVars<T extends string = typeof DEFAULT_JWT_SECRET_ENV_NAME> =
 /**
 @typedef JWTSignResult
 */
-export type JWTSignResult = {
+export interface JWTSignResult {
   token: string;
   issuedAt: number;
   expiresAt: number;
   validAt: number;
-};
+}
 
 export interface JWTService<PAYLOAD extends object> {
   sign: (payload: PAYLOAD, algorithm?: string) => Promise<JWTSignResult>;
   verify: (token: string) => Promise<PAYLOAD>;
 }
 
-export type JWTServiceConfig<
+export interface JWTServiceConfig<
   T extends string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
-> = {
+> {
   JWT_SECRET_ENV_NAME?: T;
   JWT: JWT_CONFIG<T>;
-};
+}
 
 export type JWTServiceDependencies<
   T extends string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
@@ -54,12 +55,10 @@ export type JWTServiceDependencies<
   log?: LogService;
 };
 
-export interface JWTServiceInitializer<
+export type JWTServiceInitializer<
   PAYLOAD extends object,
   T extends string = typeof DEFAULT_JWT_SECRET_ENV_NAME,
-> {
-  (dependencies: JWTServiceDependencies<T>): Promise<JWTService<PAYLOAD>>;
-}
+> = (dependencies: JWTServiceDependencies<T>) => Promise<JWTService<PAYLOAD>>;
 
 /* Architecture Note #1: JWT service
 
@@ -85,7 +84,7 @@ export default location(
     ['?JWT_SECRET_ENV_NAME', '?ENV', 'JWT', '?log', '?time'],
   ),
   import.meta.url,
-) as typeof initJWT;
+) as unknown as ServiceProperties & typeof initJWT;
 
 /**
  * Instantiate the JWT service
@@ -141,7 +140,7 @@ async function initJWT<
 
   if (!jwtSecret) {
     log('error', `❌ - No "${secretName}" env var set.`);
-    throw new YError('E_NO_JWT_SECRET', secretName);
+    throw new YError('E_NO_JWT_SECRET', [secretName]);
   }
   if (!(JWT.algorithms && JWT.algorithms.length)) {
     log('error', `❌ - At least one algorithm is required.`);
@@ -175,7 +174,7 @@ async function initJWT<
     const validAt = issuedAt;
 
     if (!JWT.algorithms.includes(algorithm)) {
-      throw new YError('E_UNKNOWN_ALGORYTHM', algorithm, JWT.algorithms);
+      throw new YError('E_UNKNOWN_ALGORYTHM', [algorithm, JWT.algorithms]);
     }
 
     const token = await new Promise<string>((resolve, reject) => {
@@ -192,7 +191,7 @@ async function initJWT<
         } as SignOptions,
         (err, token: string | undefined) => {
           if (err) {
-            reject(YError.wrap(err as Error, 'E_JWT', payload));
+            reject(YError.wrap(err as Error, 'E_JWT', [payload]));
             return;
           }
           resolve(token as string);
@@ -230,14 +229,14 @@ async function initJWT<
         (err, decoded) => {
           if (err) {
             if ('TokenExpiredError' === err.name) {
-              reject(YError.wrap(err, 'E_JWT_EXPIRED', token));
+              reject(YError.wrap(err, 'E_JWT_EXPIRED', [token]));
               return;
             }
             if ('JsonWebTokenError' === err.name) {
-              reject(YError.wrap(err, 'E_JWT_MALFORMED', token));
+              reject(YError.wrap(err, 'E_JWT_MALFORMED', [token]));
               return;
             }
-            reject(YError.wrap(err, 'E_JWT', token));
+            reject(YError.wrap(err, 'E_JWT', [token]));
             return;
           }
           resolve(decoded as PAYLOAD);
@@ -268,11 +267,11 @@ function readMS(
     const computedDuration = ms(finalValue);
 
     if ('undefined' === typeof computedDuration) {
-      throw new YError(errorCode, value);
+      throw new YError(errorCode, [value]);
     }
 
     return computedDuration;
   } catch (err) {
-    throw YError.wrap(err as Error, errorCode, finalValue);
+    throw YError.wrap(err as Error, errorCode, [finalValue]);
   }
 }
