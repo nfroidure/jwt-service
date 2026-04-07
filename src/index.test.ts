@@ -29,13 +29,13 @@ describe('jwt service', () => {
       } catch (err) {
         expect({
           errorCode: (err as YError).code,
-          errorDebugValues: (err as YError).debugValues,
+          errorDebug: (err as YError).debug,
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
          {
            "errorCode": "E_NO_JWT_SECRET",
-           "errorDebugValues": [
+           "errorDebug": [
              "JWT_SECRET",
            ],
            "logs": [
@@ -68,13 +68,13 @@ describe('jwt service', () => {
       } catch (err) {
         expect({
           errorCode: (err as YError).code,
-          errorDebugValues: (err as YError).debugValues,
+          errorDebug: (err as YError).debug,
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
          {
            "errorCode": "E_NO_JWT_ALGORITHMS",
-           "errorDebugValues": [],
+           "errorDebug": [],
            "logs": [
              [
                "error",
@@ -104,13 +104,13 @@ describe('jwt service', () => {
       } catch (err) {
         expect({
           errorCode: (err as YError).code,
-          errorDebugValues: (err as YError).debugValues,
+          errorDebug: (err as YError).debug,
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
           {
             "errorCode": "E_BAD_JWT_DURATION",
-            "errorDebugValues": [],
+            "errorDebug": [],
             "logs": [],
             "times": [],
           }
@@ -136,13 +136,13 @@ describe('jwt service', () => {
       } catch (err) {
         expect({
           errorCode: (err as YError).code,
-          errorDebugValues: (err as YError).debugValues,
+          errorDebug: (err as YError).debug,
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
          {
            "errorCode": "E_BAD_JWT_TOLERANCE",
-           "errorDebugValues": [
+           "errorDebug": [
              "",
            ],
            "logs": [],
@@ -169,13 +169,13 @@ describe('jwt service', () => {
       } catch (err) {
         expect({
           errorCode: (err as YError).code,
-          errorDebugValues: (err as YError).debugValues,
+          errorDebug: (err as YError).debug,
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
           {
             "errorCode": "E_BAD_JWT_DURATION",
-            "errorDebugValues": [
+            "errorDebug": [
               "q",
             ],
             "logs": [],
@@ -206,7 +206,7 @@ describe('jwt service', () => {
 
       const jwt = await initJWTService<{
         userId: number;
-        organisationId: number;
+        organizationId: number;
       }>({
         ENV: {
           JWT_SECRET: 'secret',
@@ -221,7 +221,7 @@ describe('jwt service', () => {
       });
       const token = await jwt.sign({
         userId: 2,
-        organisationId: 3,
+        organizationId: 3,
       });
 
       expect({
@@ -242,14 +242,14 @@ describe('jwt service', () => {
          "token": {
            "expiresAt": 1390867200000,
            "issuedAt": 1390694400000,
-           "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
+           "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXphdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.jDMFw1Cd4-G9cUxBknn_2RjY3oRQG9FuHY3sd_EdoCo",
            "validAt": 1390694400000,
          },
        }
       `);
     });
 
-    test('should work with an overriden config', async () => {
+    test('should work with an overridden config', async () => {
       time.mockReturnValueOnce(new Date('2014-01-26T00:00:00Z').getTime());
 
       const jwt = await initJWTService({
@@ -267,7 +267,7 @@ describe('jwt service', () => {
       });
       const token = await jwt.sign({
         userId: 2,
-        organisationId: 3,
+        organizationId: 3,
       });
 
       expect({
@@ -288,7 +288,7 @@ describe('jwt service', () => {
          "token": {
            "expiresAt": 1390867200000,
            "issuedAt": 1390694400000,
-           "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
+           "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXphdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.jDMFw1Cd4-G9cUxBknn_2RjY3oRQG9FuHY3sd_EdoCo",
            "validAt": 1390694400000,
          },
        }
@@ -314,22 +314,22 @@ describe('jwt service', () => {
         await jwt.sign(
           {
             userId: 2,
-            organisationId: 3,
+            organizationId: 3,
           },
-          'LOLALG',
+          'LOL_ALG',
         );
         throw new YError('E_UNEXPECTED_SUCCESS');
       } catch (err) {
         expect({
           errorCode: (err as YError).code,
-          errorDebugValues: (err as YError).debugValues,
+          errorDebug: (err as YError).debug,
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
          {
-           "errorCode": "E_UNKNOWN_ALGORYTHM",
-           "errorDebugValues": [
-             "LOLALG",
+           "errorCode": "E_UNKNOWN_ALGORITHM",
+           "errorDebug": [
+             "LOL_ALG",
              [
                "HS256",
              ],
@@ -423,13 +423,13 @@ describe('jwt service', () => {
       } catch (err) {
         expect({
           errorCode: (err as YError).code,
-          errorDebugValues: (err as YError).debugValues,
+          errorDebug: (err as YError).debug,
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
          {
            "errorCode": "E_JWT_EXPIRED",
-           "errorDebugValues": [
+           "errorDebug": [
              "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsIm9yZ2FuaXNhdGlvbklkIjozLCJpYXQiOjEzOTA2OTQ0MDAsImV4cCI6MTM5MDg2NzIwMCwibmJmIjoxMzkwNjk0NDAwfQ.DdWhIErffR-N-bTSsjr2tDOyinbMtYkL24IZxOVaB_0",
            ],
            "logs": [
@@ -462,19 +462,19 @@ describe('jwt service', () => {
       });
 
       try {
-        await jwt.verify('kikooolol');
+        await jwt.verify('pop_lol');
         throw new YError('E_UNEXPECTED_SUCCESS');
       } catch (err) {
         expect({
           errorCode: (err as YError).code,
-          errorDebugValues: (err as YError).debugValues,
+          errorDebug: (err as YError).debug,
           logs: log.mock.calls,
           times: time.mock.calls,
         }).toMatchInlineSnapshot(`
          {
            "errorCode": "E_JWT_MALFORMED",
-           "errorDebugValues": [
-             "kikooolol",
+           "errorDebug": [
+             "pop_lol",
            ],
            "logs": [
              [

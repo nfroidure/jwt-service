@@ -10,6 +10,7 @@ import { YError } from 'yerror';
 import ms, { type StringValue } from 'ms';
 import jwt, { type SignOptions, type Algorithm } from 'jsonwebtoken';
 import { noop, type LogService, type TimeService } from 'common-services';
+import './errors.js';
 
 export const DEFAULT_JWT_SECRET_ENV_NAME = 'JWT_SECRET';
 
@@ -174,7 +175,7 @@ async function initJWT<
     const validAt = issuedAt;
 
     if (!JWT.algorithms.includes(algorithm)) {
-      throw new YError('E_UNKNOWN_ALGORYTHM', [algorithm, JWT.algorithms]);
+      throw new YError('E_UNKNOWN_ALGORITHM', [algorithm, JWT.algorithms]);
     }
 
     const token = await new Promise<string>((resolve, reject) => {
